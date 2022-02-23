@@ -72,6 +72,12 @@ export const routes = [
             indexnum:'4-3',
             component: ()=>import("../components/ChildrenNav/vueLean/checkFrom.vue"),
           },
+          {
+            path: '/Vuelearn/treeSelect',
+            name:'树形下拉',
+            indexnum:'4-4',
+            component: ()=>import("../components/ChildrenNav/vueLean/treeSelect.vue"),
+          },
         ],
       },  
   ]
