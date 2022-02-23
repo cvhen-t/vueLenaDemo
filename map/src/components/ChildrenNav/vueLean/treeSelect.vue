@@ -1,6 +1,6 @@
 <template>
   <div class="main-body" >
-    <el-input @focus="getTreeData()" v-model="input" placeholder="请输入内容"></el-input>
+    <el-input  @focus="getTreeData()" v-model="input" placeholder="请输入内容"></el-input>
 
     <div>
 
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import axios from "axios"; // 引入axios
+
 export default {
   data() {
     return {
@@ -22,7 +24,8 @@ export default {
           children: 'zones',
           isLeaf: 'leaf'
         },
-        isShow:false
+        isShow:false,
+        treedata:{}
     }
   },
     methods: {
@@ -30,29 +33,26 @@ export default {
         if (node.level === 0) {
           return resolve([{ name: 'region' }]);
         }
-        if (node.level > 1) return resolve([]);
-
-        setTimeout(() => {
-          const data = [{
-            name: 'leaf',
-            leaf: true
-          }, {
-            name: 'zone'
-          }];
-
-          resolve(data);
-        }, 500);
+        axios.get("/select/treedata").then((res) => {
+            let neobj=res.data.data.data
+             resolve(neobj);
+      });
+        
       },
       getTreeData(){
           this.isShow=true
+          this.isadd=true
+
       },
-      selectChange(data, checked,){
-          console.log(data);
-          this.input=data.name
-          this.isShow=checked
+      selectChange(data, checked,a){
+        this.isShow=a
+        this.input=data.name
+      },
+    //   quittree(){
+    //     this.isShow=false
 
-
-      }
+    //   }
+  
     }
 }
 </script>
@@ -62,11 +62,12 @@ export default {
     position: relative;
 }
 .bomTree{
-background-color: #ddd;
+background-color: rgb(219, 204, 204);
 width: 300px;
 position: absolute;
-top: 50px;
+top: 10;
 left: 10px;
+padding: 10px;
 }
 
 </style>

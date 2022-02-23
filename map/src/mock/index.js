@@ -39,6 +39,21 @@ Mock.mock('/user/list', 'get', {
       ],
     },
   });
+
+  Mock.mock('/select/treedata', 'get', {
+    code: 200,
+    message: '成功',
+    data: {
+      // 生成十个如下格式的数据
+      'data|5': [
+        {
+          'id|+1': 1, // 数字从当前数开始依次 +1
+          name: '@cname', 
+          leaf:'@boolean'
+        },
+      ],
+    },
+  });
   
 
 
