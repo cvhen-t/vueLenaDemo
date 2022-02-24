@@ -1,38 +1,37 @@
 <template>
-  <el-container style="height: 900px; ">
+  <el-container style="height: 900px">
     <div class="isShow">
       <!-- 导航部分 -->
-      <el-menu class="el-menu-vertical-demo" :collapse="isCollapse">
+      <el-menu
+        class="el-menu-vertical-demo"
+        :collapse="isCollapse"
+        router
+        active-text-color="#5f8bd3"
+      >
         <!-- <div  class="Navphoto">
-        <img v-if="!isCollapse" src="./assets/photo.png" alt="">
-        <img v-else  src="./assets/photo.png" alt="" style="width: 63px;">
+        <img class="topImg" v-if="!isCollapse" src="./assets/backjpg.jpeg" alt="">
+        <img v-else   alt="" style="width: 63px;">
       </div> -->
-
- 
-        <el-submenu
-          v-for="item in routes"
-          :key="item.indexnum"
-          :index="item.indexnum"
-        >
-          <template slot="title"
-            ><i :class="item.icon " class="iconNav2"></i
-            >{{ isCollapse ? "" : item.name }}</template
-          >
-          <el-menu-item-group>
+        <div v-for="item in routes" :key="item.indexnum">
+          <el-submenu v-if="!!item.name" :index="item.path">
+            <template slot="title"
+              ><i :class="item.icon" class="iconNav2"></i
+              >{{ isCollapse ? "" : item.name }}
+            </template>
             <div v-if="!!item.children">
-            
-              <el-menu-item
-                v-for="(itemc, index) in item.children"
-                :key="index"
-                :index="itemc.indexnum"
-                @click="goroute(itemc.path)"
+              <el-menu-item-group>
+                <el-menu-item
+                  v-for="itemc in item.children"
+                  :key="itemc.indexnum"
+                  :index="itemc.path"
                 >
-                  <i class="el-icon-guide   iconNav3" ></i>
-                {{ itemc.name }}</el-menu-item
-              >
+                  <i class="el-icon-guide iconNav3"></i>
+                  {{ itemc.name }}</el-menu-item
+                >
+              </el-menu-item-group>
             </div>
-          </el-menu-item-group>
-        </el-submenu>
+          </el-submenu>
+        </div>
       </el-menu>
       <!-- </el-aside> -->
     </div>
@@ -82,16 +81,6 @@ export default {
     // console.log(this.routes);
   },
   methods: {
-    goroute(path) {
-      if (path != this.$route.path) {
-        this.$router.push({
-          path,
-          // query: {
-          //   id: 1,
-          // },
-        });
-      }
-    },
     openNav() {
       this.isCollapse = !this.isCollapse;
     },
@@ -103,6 +92,7 @@ export default {
 .isShow {
   z-index: 1000;
   box-shadow: 3px 0px 7px #888888;
+  background-image: url(../src/assets/backjpg.jpeg);
 }
 
 .el-header {
@@ -110,10 +100,15 @@ export default {
   color: #333;
   line-height: 60px;
   border-bottom: 1px solid #ddd;
+  /* box-shadow: 0px 0px 9px #888888 !important; */
+
+  /* background-image: url(../src/assets/jpg.png); */
 }
-.el-menu{
+.el-menu {
   color: rgb(51, 51, 51);
   font-weight: 600;
+  min-height: 0px !important;
+  opacity: 0.93 !important;
 }
 
 .el-aside {
@@ -130,7 +125,7 @@ export default {
   height: 100%;
   padding: 15px;
   background-color: white;
-  border: 0px ;
+  border: 0px;
 }
 .el-main {
   margin: 0px !important;
@@ -153,16 +148,19 @@ export default {
   font-size: 23px !important;
   line-height: 50px;
 }
-.iconNav2{
+.iconNav2 {
   padding-right: 5px;
   color: #5f8bd3 !important;
   font-size: 22px !important;
-
 }
-.iconNav3{
+.iconNav3 {
   color: #5f8bd3 !important;
-  font-size:8px !important;
+  font-size: 8px !important;
+}
 
+.topImg {
+  width: 139px;
+  height: 150px;
 }
 </style> 
 
