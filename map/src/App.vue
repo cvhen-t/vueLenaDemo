@@ -2,36 +2,32 @@
   <el-container style="height: 900px; ">
     <div class="isShow">
       <!-- 导航部分 -->
-      <el-menu class="el-menu-vertical-demo" :collapse="isCollapse">
+      <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" router active-text-color="#5f8bd3">
         <!-- <div  class="Navphoto">
         <img v-if="!isCollapse" src="./assets/photo.png" alt="">
         <img v-else  src="./assets/photo.png" alt="" style="width: 63px;">
       </div> -->
-
- 
         <el-submenu
           v-for="item in routes"
           :key="item.indexnum"
-          :index="item.indexnum"
+          :index="item.path"
         >
           <template slot="title"
             ><i :class="item.icon " class="iconNav2"></i
-            >{{ isCollapse ? "" : item.name }}</template
+            >{{ isCollapse ? "" : item.name }} </template
           >
+          <div v-if="!!item.children">
           <el-menu-item-group>
-            <div v-if="!!item.children">
-            
               <el-menu-item
-                v-for="(itemc, index) in item.children"
-                :key="index"
-                :index="itemc.indexnum"
-                @click="goroute(itemc.path)"
+                v-for="(itemc) in item.children"
+                :key="itemc.indexnum"
+                :index="itemc.path"
                 >
                   <i class="el-icon-guide   iconNav3" ></i>
                 {{ itemc.name }}</el-menu-item
               >
-            </div>
           </el-menu-item-group>
+            </div>
         </el-submenu>
       </el-menu>
       <!-- </el-aside> -->
@@ -82,16 +78,18 @@ export default {
     // console.log(this.routes);
   },
   methods: {
-    goroute(path) {
-      if (path != this.$route.path) {
-        this.$router.push({
-          path,
-          // query: {
-          //   id: 1,
-          // },
-        });
-      }
-    },
+    // goroute(path,indexnum) {
+    //   console.log(path,indexnum);
+    //   if (path != this.$route.path) {
+    //     this.$router.push({
+    //       path,
+    //       indexnum
+    //       // query: {
+    //       //   id: 1,
+    //       // },
+    //     });
+    //   }
+    // },
     openNav() {
       this.isCollapse = !this.isCollapse;
     },

@@ -70,7 +70,6 @@
         <p>项目重要目录结构</p>
         <el-tree
           :data="data"
-          :props="defaultProps"
           @node-click="handleNodeClick"
         ></el-tree>
         <div style="margin-top: 10px"></div>

@@ -62,12 +62,13 @@ export default {
     position: relative;
 }
 .bomTree{
-background-color: rgb(219, 204, 204);
-width: 300px;
+width: 400px;
 position: absolute;
-top: 10;
-left: 10px;
+top: 40px;
+left: 0px;
 padding: 10px;
+/* border: 1px solid #ddd; */
+ box-shadow: 0px 0px 9px #888888;
 }
 
 </style>
