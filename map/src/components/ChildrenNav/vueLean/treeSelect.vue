@@ -4,8 +4,8 @@
 
     <div>
 
-        <div class="bomTree" v-if="isShow">
-        <el-tree @check-change="selectChange" :props="props" :load="loadNode"  lazy   show-checkbox></el-tree>
+        <div  class="bomTree" v-if="isShow">
+        <el-tree  @check-change="selectChange" :props="props" :load="loadNode"  lazy   show-checkbox></el-tree>
         </div>
 
     </div>
@@ -48,10 +48,11 @@ export default {
         this.isShow=a
         this.input=data.name
       },
-    //   quittree(){
-    //     this.isShow=false
+      treeclose(){
+          console.log(1);
+        this.isShow=false
 
-    //   }
+      }
   
     }
 }
