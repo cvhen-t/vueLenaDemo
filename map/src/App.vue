@@ -4,12 +4,13 @@
       <!-- 导航部分 -->
       <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" router active-text-color="#5f8bd3">
         <!-- <div  class="Navphoto">
-        <img v-if="!isCollapse" src="./assets/photo.png" alt="">
-        <img v-else  src="./assets/photo.png" alt="" style="width: 63px;">
+        <img class="topImg" v-if="!isCollapse" src="./assets/backjpg.jpeg" alt="">
+        <img v-else   alt="" style="width: 63px;">
       </div> -->
-        <el-submenu
-          v-for="item in routes"
-          :key="item.indexnum"
+      <div  v-for="item in routes"
+          :key="item.indexnum" >
+  <el-submenu
+         v-if="!!item.name"
           :index="item.path"
         >
           <template slot="title"
@@ -29,6 +30,8 @@
           </el-menu-item-group>
             </div>
         </el-submenu>
+      </div>
+      
       </el-menu>
       <!-- </el-aside> -->
     </div>
@@ -78,18 +81,6 @@ export default {
     // console.log(this.routes);
   },
   methods: {
-    // goroute(path,indexnum) {
-    //   console.log(path,indexnum);
-    //   if (path != this.$route.path) {
-    //     this.$router.push({
-    //       path,
-    //       indexnum
-    //       // query: {
-    //       //   id: 1,
-    //       // },
-    //     });
-    //   }
-    // },
     openNav() {
       this.isCollapse = !this.isCollapse;
     },
@@ -101,6 +92,8 @@ export default {
 .isShow {
   z-index: 1000;
   box-shadow: 3px 0px 7px #888888;
+  background-image: url(../src/assets/backjpg.jpeg);
+  
 }
 
 .el-header {
@@ -108,10 +101,15 @@ export default {
   color: #333;
   line-height: 60px;
   border-bottom: 1px solid #ddd;
+  
+  /* background-image: url(../src/assets/jpg.png); */
+
 }
 .el-menu{
   color: rgb(51, 51, 51);
   font-weight: 600;
+  min-height: 0px !important;
+  opacity:0.93 !important;
 }
 
 .el-aside {
@@ -161,6 +159,11 @@ export default {
   color: #5f8bd3 !important;
   font-size:8px !important;
 
+}
+
+.topImg{
+  width: 139px;
+  height: 150px;
 }
 </style> 
 
