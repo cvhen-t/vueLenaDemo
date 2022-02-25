@@ -1,12 +1,30 @@
 <template>
+
+
   <baidu-map
     :center="center"
     :zoom="zoom"
     @ready="handler"
-    style="height: 100%"
+    style="height: 70%; width: 30%"
     @click="getClickInfo"
     :scroll-wheel-zoom="true"
-  ></baidu-map>
+  >
+  <!-- 操作 -->
+
+  <div>
+
+<button @click="getMycity('南昌')">获取位置信息</button>
+
+
+  </div>
+  
+  </baidu-map>
+
+  
+
+<!-- 操作 -->
+
+  
 </template>
 
 <script>
@@ -18,12 +36,18 @@ export default {
       // 地图缩放级别/
       zoom: 13,
       map: "",
+      BMap:""
     };
   },
-  mounted() {},
+  mounted() {
+
+
+
+  },
   methods: {
     handler({ BMap, map }) {
-      this.map = map;
+      window.map = map;
+      window.BMap = BMap;
       const point = new BMap.Point(109.49926175379778, 36.60449676862417);
       map.centerAndZoom(point, 13);
       const marker = new BMap.Marker(point); // 创建标注
@@ -46,6 +70,24 @@ export default {
       // this.center.lng = e.point.lng;
       // this.center.lat = e.point.lat;
     },
+
+    getMycity(Name){
+
+        function myFun(Name){
+        var cityName = Name;
+        map.setCenter(cityName);
+        alert("当前定位城市:" + cityName);
+    }
+   const myCity = new BMap.LocalCity();  
+
+    console.log(myCity,Name);
+      myCity.get(myFun); 
+
+    // this.BMap.setCenter(Name);
+    //     alert("当前定位城市:" + Name);
+    // myCity.get(myFun);
+    
+    }
   },
 };
 </script>

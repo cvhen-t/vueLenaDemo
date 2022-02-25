@@ -58,10 +58,10 @@
             <p></p>
             <span>jsx：</span
             ><a target="_blank" href="https://www.npmjs.com/package/jsx"
-              >网站:https://www.npmjs.com/package/jsx</a
-            >
+              >网站:https://www.npmjs.com/package/jsx</a>
             <p></p>
-            <span>百度地图</span><span>网站：<a>暂无</a></span>
+            <span>百度地图</span><span>网站：<a target="_blank" href="https://dafrok.github.io/vue-baidu-map/#/zh/start/usage"
+              >网站:https://dafrok.github.io/vue-baidu-map/#/zh/start/usage</a></span>
           </div>
         </div>
       </el-tab-pane>
