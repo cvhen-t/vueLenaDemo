@@ -96,8 +96,11 @@ html,body{
   z-index: 1000;
   box-shadow: 3px 0px 7px #888888;
   background-image: url(../src/assets/backjpg.jpeg);
-  height: 900px !important;
-  /* position: fixed !important; */
+  height: 80% !important;
+}
+.el-menu-vertical-demo{
+
+  
 }
 
 .el-header {
@@ -136,7 +139,7 @@ html,body{
   margin: 0px !important;
   padding: 0px !important;
   height: 100%;
-  background-color: #ddd !important;
+  background-color: white !important;
 }
 .openIcon {
   text-align: center;

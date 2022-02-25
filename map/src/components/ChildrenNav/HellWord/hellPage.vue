@@ -60,8 +60,15 @@
             ><a target="_blank" href="https://www.npmjs.com/package/jsx"
               >网站:https://www.npmjs.com/package/jsx</a>
             <p></p>
-            <span>百度地图</span><span>网站：<a target="_blank" href="https://dafrok.github.io/vue-baidu-map/#/zh/start/usage"
-              >网站:https://dafrok.github.io/vue-baidu-map/#/zh/start/usage</a></span>
+            <span>百度地图</span><span>网站：
+              <a target="_blank" href="https://dafrok.github.io/vue-baidu-map/#/zh/start/usage">
+              
+              vue-百度网站:https://dafrok.github.io/vue-baidu-map/#/zh/start/usage</a><br>
+                <a target="_blank" href="https://lbsyun.baidu.com/index.php?title=jspopularGL/guide/show">
+              
+              百度地图api网站:https://lbsyun.baidu.com/index.php?title=jspopularGL/guide/show</a>
+              
+              </span>
           </div>
         </div>
       </el-tab-pane>

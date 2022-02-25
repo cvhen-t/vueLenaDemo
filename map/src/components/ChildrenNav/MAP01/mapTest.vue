@@ -1,23 +1,16 @@
 <template>
-
-
   <baidu-map
     :center="center"
     :zoom="zoom"
     @ready="handler"
-    style="height: 70%; width: 30%"
+    style="height: 100%; width: 60%"
     @click="getClickInfo"
     :scroll-wheel-zoom="true"
   >
   <!-- 操作 -->
-
   <div>
-
-<button @click="getMycity('南昌')">获取位置信息</button>
-
-
+      <button @click="getMycity('南昌')">获取位置信息</button>
   </div>
-  
   </baidu-map>
 
   
@@ -71,22 +64,14 @@ export default {
       // this.center.lat = e.point.lat;
     },
 
-    getMycity(Name){
-
-        function myFun(Name){
-        var cityName = Name;
+    getMycity(){
+        function myFun(result){
+        var cityName =  result.name;;
         map.setCenter(cityName);
         alert("当前定位城市:" + cityName);
     }
-   const myCity = new BMap.LocalCity();  
-
-    console.log(myCity,Name);
+      const myCity = new BMap.LocalCity();  
       myCity.get(myFun); 
-
-    // this.BMap.setCenter(Name);
-    //     alert("当前定位城市:" + Name);
-    // myCity.get(myFun);
-    
     }
   },
 };
