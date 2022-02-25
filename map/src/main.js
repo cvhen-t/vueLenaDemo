@@ -25,7 +25,7 @@ new Vue({
 }).$mount('#app')
 
 Vue.use(BaiduMap,{
-ak:'你申请的ok'
+ak:'SJ5BZ-WUB6U-TNXV3-B3L4L-7437F-I4FU4'
 })
 
 

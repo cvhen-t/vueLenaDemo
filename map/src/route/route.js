@@ -26,7 +26,7 @@ export const routes = [
         children: [
           {
             path: '/HellWord/mapTest',
-            name:'板块测试',
+            name:'百度地图',
             indexnum:'2-1',
             component: ()=>import("../components/ChildrenNav/MAP01/mapTest.vue"),
           },
