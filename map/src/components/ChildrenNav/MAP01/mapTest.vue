@@ -3,7 +3,7 @@
     :center="center"
     :zoom="zoom"
     @ready="handler"
-    style="height: 1080px"
+    style="height: 100%"
     @click="getClickInfo"
     :scroll-wheel-zoom="true"
   ></baidu-map>

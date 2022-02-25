@@ -1,5 +1,5 @@
 <template>
-  <el-container >
+  <el-container style="height: 100%">
     <div class="isShow">
       <!-- 导航部分 -->
       <el-menu
@@ -89,12 +89,15 @@ export default {
 </script>
 
 <style>
+html,body{
+  height: 100%;
+}
 .isShow {
   z-index: 1000;
   box-shadow: 3px 0px 7px #888888;
   background-image: url(../src/assets/backjpg.jpeg);
   height: 900px !important;
-  position: fixed !important;
+  /* position: fixed !important; */
 }
 
 .el-header {
@@ -128,7 +131,6 @@ export default {
   padding: 15px;
   background-color: white;
   border: 0px;
-  padding-left: 209px;
 }
 .el-main {
   margin: 0px !important;
