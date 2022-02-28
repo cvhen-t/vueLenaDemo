@@ -36,6 +36,9 @@
               href="https://element.eleme.cn/#/zh-CN/component"
               >网站:https://element.eleme.cn/#/zh-CN/component</a
             >
+             <p></p>
+            <span>配色网站：</span>
+              <a target="_blank" href="http://tool.c7sky.com/webcolor/#character_14">http://tool.c7sky.com/webcolor/#character_14</a>
           </div>
 
           <div style="margin-top: 10px">
@@ -65,10 +68,9 @@
               
               vue-百度网站:https://dafrok.github.io/vue-baidu-map/#/zh/start/usage</a><br>
                 <a target="_blank" href="https://lbsyun.baidu.com/index.php?title=jspopularGL/guide/show">
-              
               百度地图api网站:https://lbsyun.baidu.com/index.php?title=jspopularGL/guide/show</a>
-              
               </span>
+             
           </div>
         </div>
       </el-tab-pane>
