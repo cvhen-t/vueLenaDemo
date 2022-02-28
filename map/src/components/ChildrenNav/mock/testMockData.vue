@@ -1,6 +1,8 @@
 <template>
   <div>
        <button @click="getData()">获取数据</button>
+       <router-view></router-view>
+
   </div>
 </template>
 

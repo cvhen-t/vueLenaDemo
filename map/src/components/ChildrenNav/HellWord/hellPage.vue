@@ -144,6 +144,25 @@
           </pre>
         </div>
       </el-tab-pane>
+
+        <el-tab-pane label="git 提交操作">
+        <div>
+         
+
+          <pre>
+       
+       提交代码前：git pull 一下 提取到最新的代码 防止远程分支别人提交过
+       git merge main（本地分支 不一定是main 但是这个项目只有main分支）这个操作是合并本地和 pull下来的最新代码
+
+
+       然后就是自己写代码的代码 
+       git add . 
+       git cpmmit -m '提交备注 一定要写'
+       git push 提交代码
+            </pre>
+        
+        </div>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>

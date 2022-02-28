@@ -44,6 +44,15 @@ export const routes = [
             name:'mock获取数据',
             indexnum:'3-1',
             component: ()=>import("../components/ChildrenNav/mock/testMockData.vue"),
+            // children:[
+            //   {
+            //     path: 'a',
+            //     name:'mock获取数据',
+            //     indexnum:'3-1',
+            //     component: ()=>import("../components/ChildrenNav/mock/testMockData.vue"),
+               
+            //   },
+            // ]
           },
         ],
       },
