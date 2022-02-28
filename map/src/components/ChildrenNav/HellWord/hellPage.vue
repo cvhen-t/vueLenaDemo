@@ -157,7 +157,7 @@
 
        然后就是自己写代码的代码 
        git add . 
-       git cpmmit -m '提交备注 一定要写'
+       git commit -m '提交备注 一定要写'
        git push 提交代码
             </pre>
         
