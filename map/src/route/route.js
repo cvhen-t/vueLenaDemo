@@ -34,7 +34,7 @@ export const routes = [
       },
       {
         path: '/mock',
-        name:'MOCK',
+        name:'数据部分',
         indexnum:'3',
         icon:'el-icon-upload',
         component: ()=>import("../components/Navcomponents/mock.vue"),
@@ -53,6 +53,12 @@ export const routes = [
                
             //   },
             // ]
+          },
+          {
+            path: '/mock/Arrfun',
+            name:'数组方法',
+            indexnum:'3-2',
+            component: ()=>import("../components/ChildrenNav/mock/Arrfun.vue"),
           },
         ],
       },
