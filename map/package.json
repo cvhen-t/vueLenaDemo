@@ -15,10 +15,14 @@
     "core-js": "^3.6.5",
     "element-plus": "^2.0.2",
     "element-ui": "^2.15.6",
+    "jshint": "^2.13.4",
+    "jsonlint": "^1.6.3",
     "mockjs": "^1.1.0",
+    "script-loader": "^0.7.2",
     "view-design": "^4.7.0",
     "vue": "^2.6.11",
     "vue-baidu-map": "^0.21.22",
+    "vue-codemirror": "^4.0.6",
     "vue-router": "^3.5.3"
   },
   "devDependencies": {
@@ -28,6 +32,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.6.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

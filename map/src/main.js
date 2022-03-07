@@ -13,6 +13,15 @@ if (process.env.NODE_ENV !== 'production') require('./mock')
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
+import jshint from "jshint";
+
+window.JSHINT = jshint.JSHINT;
+// 引入代码编辑器 
+
+import { codemirror } from "vue-codemirror";
+
+import "codemirror/lib/codemirror.css";
+
 Vue.use(VueRouter)
 Vue.use(ViewUI);
 Vue.use(ElementUI);
@@ -28,4 +37,5 @@ Vue.use(BaiduMap,{
 ak:'SJ5BZ-WUB6U-TNXV3-B3L4L-7437F-I4FU4'
 })
 
+Vue.use(codemirror);
 

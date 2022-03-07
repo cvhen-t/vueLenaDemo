@@ -60,6 +60,12 @@ export const routes = [
             indexnum:'3-2',
             component: ()=>import("../components/ChildrenNav/mock/Arrfun.vue"),
           },
+          {
+            path: '/mock/codeedit',
+            name:'在线编辑器',
+            indexnum:'3-3',
+            component: ()=>import("../components/ChildrenNav/mock/codeedit.vue"),
+          },
         ],
       },
       {
