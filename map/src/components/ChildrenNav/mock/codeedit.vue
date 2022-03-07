@@ -46,7 +46,7 @@
 
 // 使用时需要根据CodeMirrorEditor.vue的实际存放路径，调整from后面的组件路径，以便正确引用
 
-import CodeMirrorEditor from "../../childCompoen/passdataChild/codeeditChild.vue";
+import CodeMirrorEditor from "../../../components/childCompoen/passdataChild/codeeditChild.vue";
 
  
 
@@ -171,16 +171,27 @@ export default {
                     this.cmMode = "htmlmixed";
                     break;
                 case "yaml":
+
                     this.cmMode = "yaml";
+
                     break;
+
                 case "markdown":
+
                     this.cmMode = "markdown";
+
                     break;
+
                 case "python":
+
                     this.cmMode = "python";
+
                     break;
+
                 default:
+
                     this.cmMode = "application/json";
+
             }
 
         },

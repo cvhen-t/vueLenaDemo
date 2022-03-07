@@ -18,39 +18,21 @@
 <script>
 
 import { codemirror } from "vue-codemirror";
-
- 
-
 import "codemirror/theme/blackboard.css";
-
 import "codemirror/mode/javascript/javascript.js"; 
-
 import "codemirror/mode/xml/xml.js";
-
 import "codemirror/mode/htmlmixed/htmlmixed.js"; 
-
 import "codemirror/mode/css/css.js";
-
 import "codemirror/mode/yaml/yaml.js";
-
 import "codemirror/mode/sql/sql.js";
-
 import "codemirror/mode/python/python.js";
-
 import "codemirror/mode/markdown/markdown.js";
-
 import "codemirror/addon/hint/show-hint.css";
-
 import "codemirror/addon/hint/show-hint.js"; 
-
 import "codemirror/addon/hint/javascript-hint.js";
-
 import "codemirror/addon/hint/xml-hint.js";
-
 import "codemirror/addon/hint/css-hint.js"; 
-
 import "codemirror/addon/hint/html-hint.js";
-
 import "codemirror/addon/hint/sql-hint.js";
 
 import "codemirror/addon/hint/anyword-hint.js"; 
