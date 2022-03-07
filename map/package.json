@@ -12,6 +12,7 @@
     "@vue/babel-preset-jsx": "^1.2.4",
     "@vue/composition-api": "^1.4.6",
     "axios": "^0.25.0",
+    "brace": "^0.11.1",
     "core-js": "^3.6.5",
     "element-plus": "^2.0.2",
     "element-ui": "^2.15.6",
@@ -21,7 +22,9 @@
     "script-loader": "^0.7.2",
     "view-design": "^4.7.0",
     "vue": "^2.6.11",
+    "vue-ace": "0.0.1",
     "vue-baidu-map": "^0.21.22",
+    "vue-brace": "^2.0.0",
     "vue-codemirror": "^4.0.6",
     "vue-router": "^3.5.3"
   },

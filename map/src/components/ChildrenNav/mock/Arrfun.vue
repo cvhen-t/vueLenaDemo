@@ -27,21 +27,40 @@
         </el-collapse-item>
         <!-- ----------------------------------------------------------------------------------- -->
 
-        <el-collapse-item title="反馈 Feedback" name="2">
+        <el-collapse-item title="数组过滤" name="2">
           <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
         </el-collapse-item>
       </el-collapse>
     </div>
 
-    <div>展示结果</div>
+    <div>
+      在线编辑运行
+      
+<editor :content="variable" :height="'500px'"></editor>
+
+
+    </div>
   </div>
 </template>
 
 <script>
+import editor from 'vue-ace'
+import 'brace/mode/javascript'
+import 'brace/theme/chrome'
+
+
+
+
 export default {
       mounted() {
       this.restaurants = this.loadAll();
     },
+    created(){
+    this.init()
+    },
+    components: {
+  editor
+},
     data() {
       return {
         restaurants: [],
@@ -58,6 +77,25 @@ export default {
         }
         return -1;
         },
+        init(script) {
+  let self = this
+  // var editor = ace.edit('javascript-editor')
+  editor.getSession().setMode('ace/mode/javascript') //语言
+  editor.setOptions({
+    // 默认:false
+    wrap: true, // 换行
+    autoScrollEditorIntoView: false, // 自动滚动编辑器视图
+    enableLiveAutocompletion: true, // 智能补全
+    enableBasicAutocompletion: true // 启用基本完成 不推荐使用
+  })
+  if (script) {
+    editor.setValue(script) //需要主动赋值
+  } else editor.setValue(this.code)
+  editor.getSession().on('change', function() {
+    self.$emit('update:code', editor.getValue()) //js 编辑器作为组件 传参给父组件
+  })
+ },
+
 
 
 
@@ -92,7 +130,7 @@ return (restaurant) => {
 },
 loadAll() {
     return [
-        { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
+        { "value": "[{name:1,arg:2,work:3}]" },
         { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
         { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
         { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
