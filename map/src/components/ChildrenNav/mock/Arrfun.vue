@@ -33,10 +33,15 @@
       </el-collapse>
     </div>
 
-    <div>
+    <div style="width: 50%;">
       在线编辑运行
       
-<editor :content="variable" :height="'500px'"></editor>
+     <editor
+      ref="editors"
+      :content="value"
+      :theme="'crimson_editor'"
+      :config="config"
+      @change="editorChange"></editor>
 
 
     </div>
@@ -44,22 +49,15 @@
 </template>
 
 <script>
-import editor from 'vue-ace'
-import 'brace/mode/javascript'
-import 'brace/theme/chrome'
-
-
-
-
 export default {
       mounted() {
       this.restaurants = this.loadAll();
     },
     created(){
-    this.init()
+   
     },
     components: {
-  editor
+   editor: require('vue2-ace-editor'),
 },
     data() {
       return {
@@ -71,30 +69,20 @@ export default {
       };
     },
   methods: {
+    editorInit: function () {
+            require('brace/ext/language_tools') //language extension prerequsite...
+            require('brace/mode/html')                
+            require('brace/mode/javascript')    //language
+            require('brace/mode/less')
+            require('brace/theme/chrome')
+            require('brace/snippets/javascript') //snippet
+        },
    arrSelect(arr,chaeckfield, chaeckvalue) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i].chaeckfield == chaeckvalue) return i;
         }
         return -1;
         },
-        init(script) {
-  let self = this
-  // var editor = ace.edit('javascript-editor')
-  editor.getSession().setMode('ace/mode/javascript') //语言
-  editor.setOptions({
-    // 默认:false
-    wrap: true, // 换行
-    autoScrollEditorIntoView: false, // 自动滚动编辑器视图
-    enableLiveAutocompletion: true, // 智能补全
-    enableBasicAutocompletion: true // 启用基本完成 不推荐使用
-  })
-  if (script) {
-    editor.setValue(script) //需要主动赋值
-  } else editor.setValue(this.code)
-  editor.getSession().on('change', function() {
-    self.$emit('update:code', editor.getValue()) //js 编辑器作为组件 传参给父组件
-  })
- },
 
 
 
