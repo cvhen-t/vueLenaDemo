@@ -56,7 +56,6 @@ export default {
 
 .listy{
     height:150px ;
-    border: 1px solid black;
     width: 30px;
     position: relative;
 
