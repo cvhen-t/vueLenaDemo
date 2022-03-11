@@ -99,6 +99,12 @@ export const routes = [
             indexnum:'4-4',
             component: ()=>import("../components/ChildrenNav/vueLean/treeSelect.vue"),
           },
+          {
+            path: '/Vuelearn/column',
+            name:'柱状显示',
+            indexnum:'4-5',
+            component: ()=>import("../components/ChildrenNav/vueLean/column.vue"),
+          },
         ],
       },  
   ]

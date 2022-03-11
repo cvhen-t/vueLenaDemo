@@ -2,40 +2,13 @@
   <div>
     <div>
       <h2>管理后台：</h2>
-      <Form
-        ref="formLeft"
-        :model="formLeft"
-        label-position="left"
-        :label-width="100"
-      >
+      <Form ref="formLeft" :model="formLeft" label-position="left" :label-width="100">
         <Row type="flex" align="bottom" class="code-row-bg">
-          <Col span="5">
-            <FormItem label="商品名称">
-              <Input v-model="formLeft.name"></Input>
-            </FormItem>
-          </Col>
-          <Col span="5">
-            <FormItem label="商品价格">
-              <Input v-model="formLeft.price"></Input>
-            </FormItem>
-          </Col>
-          <Col span="5">
-            <FormItem label="商品数量">
-              <Input v-model="formLeft.num"></Input>
-            </FormItem>
-          </Col>
-          <Col span="5">
-            <FormItem label="商品ID">
-              <Input v-model="formLeft.id"></Input>
-            </FormItem>
-          </Col>
-          <Col span="4">
-            <FormItem>
-              <Button style="margin-left: 0" @click="handleSubmit('formLeft')"
-                >添加商品</Button
-              >
-            </FormItem>
-          </Col>
+          <Col span="5"> <FormItem label="商品名称"> <Input v-model="formLeft.name"></Input> </FormItem> </Col>
+          <Col span="5">  <FormItem label="商品价格">  <Input v-model="formLeft.price"></Input> </FormItem> </Col>
+          <Col span="5"> <FormItem label="商品数量"> <Input v-model="formLeft.num"></Input></FormItem> </Col>
+          <Col span="5"> <FormItem label="商品ID"> <Input v-model="formLeft.id"></Input> </FormItem> </Col>
+          <Col span="4"> <FormItem> <Button style="margin-left: 0" @click="handleSubmit('formLeft')">添加商品</Button> </FormItem> </Col>
         </Row>
       </Form>
       <hr />
@@ -49,14 +22,8 @@
       </div>
     </div>
     <hr />
-    <div>
-      <h2>购物车：</h2>
-      <passChild01
-        :datalist="datalist"
-        :numchange="numchange"
-        :allprice="allprice"
-      ></passChild01>
-    </div>
+    <!-- //子组件 -->
+    <div> <h2>购物车：</h2> <passChild01 :datalist="datalist" :numchange="numchange" :allprice="allprice"></passChild01> </div>
   </div>
 </template>
 

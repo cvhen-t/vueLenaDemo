@@ -35,13 +35,7 @@
 
     <div style="width: 50%;">
       在线编辑运行
-      
-     <editor
-      ref="editors"
-      :content="value"
-      :theme="'crimson_editor'"
-      :config="config"
-      @change="editorChange"></editor>
+
 
 
     </div>
@@ -57,7 +51,6 @@ export default {
    
     },
     components: {
-   editor: require('vue2-ace-editor'),
 },
     data() {
       return {
@@ -69,14 +62,7 @@ export default {
       };
     },
   methods: {
-    editorInit: function () {
-            require('brace/ext/language_tools') //language extension prerequsite...
-            require('brace/mode/html')                
-            require('brace/mode/javascript')    //language
-            require('brace/mode/less')
-            require('brace/theme/chrome')
-            require('brace/snippets/javascript') //snippet
-        },
+
    arrSelect(arr,chaeckfield, chaeckvalue) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i].chaeckfield == chaeckvalue) return i;
