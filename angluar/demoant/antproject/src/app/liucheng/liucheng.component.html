@@ -1,0 +1,28 @@
+<!-- 添加节点 -->
+<button (click)="addnode()">添加节点</button>
+
+<div id="mountNode"></div>
+
+
+
+
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="关联环节" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+
+    <div>
+
+    </div>
+
+    <div>
+      <nz-select nzAllowClear style="width: 100%;" [(ngModel)]="selectedValue" (ngModelChange)="selectnodedata($event)" >
+        <ng-container *ngFor="let info of opention">
+            <nz-option [nzLabel]="info.label" [nzValue]="info"></nz-option>
+        </ng-container>
+    </nz-select>
+    </div>
+
+
+  </ng-container>
+</nz-modal>
+

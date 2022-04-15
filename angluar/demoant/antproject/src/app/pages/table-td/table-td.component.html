@@ -1,0 +1,228 @@
+<!-- 5350px 全部展开长度 -->
+<div id="exportableTable">
+
+  <nz-table
+  #virtualTable
+  [nzBordered]="true"
+  [nzData]="listOfData"
+  [nzShowPagination]="false"
+  [nzScroll]="{ x: '5350px', y: '240px' }"
+
+>
+  <thead>
+    <tr >
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+      <th nzWidth="100px" nzLeft></th>
+
+      <th  style="position: relative;" nzWidth="100px">
+    <button class="btn" (click)="isshowclick(1)" > {{isShow?'-':'+'}}</button>
+
+      </th>
+
+      <th *ngIf="isShow" nzWidth="100px"></th>
+      <th *ngIf="isShow" nzWidth="100px"></th>
+      <th *ngIf="isShow" nzWidth="100px"></th>
+      <th *ngIf="isShow" nzWidth="100px"></th>
+      <th *ngIf="isShow" nzWidth="100px"></th>
+      <th *ngIf="isShow" nzWidth="100px"></th>
+      <th *ngIf="isShow" nzWidth="100px"></th>
+
+      <th nzWidth="100px">总收入</th>
+
+      <th *ngIf="isShow2" nzWidth="100px">收费收入/租金</th>
+      <th *ngIf="isShow2" nzWidth="100px">运价</th>
+      <th *ngIf="isShow2" nzWidth="100px">货运量</th>
+      <th *ngIf="isShow2" nzWidth="100px">燃油补偿</th>
+      <th *ngIf="isShow2"nzWidth="100px">亏舱补偿</th>
+      <th *ngIf="isShow2" nzWidth="100px">滞期费收入</th>
+      <th *ngIf="isShow2" nzWidth="100px">其他收入</th>
+
+      <th nzWidth="100px">变动成本支出</th>
+
+      <th *ngIf="isShow3" nzWidth="100px">佣金</th>
+      <th *ngIf="isShow3" nzWidth="100px">燃油成本</th>
+      <th *ngIf="isShow3" nzWidth="100px">港口使费</th>
+      <th *ngIf="isShow3" nzWidth="100px">背靠背租金</th>
+      <th *ngIf="isShow3" nzWidth="100px">速遣费</th>
+      <th *ngIf="isShow3" nzWidth="100px">其他支出</th>
+      <th *ngIf="isShow3" nzWidth="100px">HSFO燃油耗量</th>
+      <th *ngIf="isShow3" nzWidth="100px">LSFO燃油耗量</th> 
+      <th *ngIf="isShow3" nzWidth="100px">HSDO燃油耗量</th>
+      <th *ngIf="isShow3" nzWidth="100px">LSDO燃油耗量</th>
+
+      <th nzWidth="100px">贡献毛益</th>
+      <th nzWidth="100px">期租水平</th>
+
+      <th *ngIf="isShow4" nzWidth="100px">航次亏盈</th>
+      <th *ngIf="isShow4" nzWidth="100px">日亏盈</th>
+      <th *ngIf="isShow4" nzWidth="100px">毛期租水平</th>
+      <th *ngIf="isShow4" nzWidth="100px">租金成本</th>
+      <th *ngIf="isShow4" nzWidth="100px">自有船贡献毛益</th>
+      <th *ngIf="isShow4" nzWidth="100px">租入船利润</th>
+      <th *ngIf="isShow4" nzWidth="100px">开始存油-HSFO</th>
+      <th *ngIf="isShow4" nzWidth="100px">开始存油-HSDO</th>
+      <th *ngIf="isShow4" nzWidth="100px">开始存油-HSFO</th>
+      <th *ngIf="isShow4" nzWidth="100px">开始存油-LSDO</th>
+      <th *ngIf="isShow4" nzWidth="100px">航次状态</th>
+      <th *ngIf="isShow4" nzWidth="100px">成交部门</th>
+
+      <th nzWidth="100px">成交单位</th>
+      <th nzWidth="100px">成交主办</th>
+      <th nzWidth="100px">调度主办</th>
+    </tr>
+
+
+    <!-- ............. -->
+    <tr >
+      <th nzWidth="100px" nzLeft>船名</th>
+      <th nzWidth="100px" nzLeft>船舶代码</th>
+      <th nzWidth="100px" nzLeft>船型(7类)</th>
+      <th nzWidth="100px" nzLeft>船舶权属</th>
+      <th nzWidth="100px" nzLeft>航次</th>
+      <th nzWidth="100px" nzLeft>航次属性</th>
+      <th nzWidth="100px" nzLeft>营运方式</th>
+      <th nzWidth="100px" nzLeft>测算版本</th>
+
+      <th nzWidth="100px">营运天</th>
+
+      <th *ngIf="isShow" nzWidth="100px">航次开始时间</th>
+      <th *ngIf="isShow" nzWidth="100px">航次结束时间</th>
+      <th *ngIf="isShow" nzWidth="100px">航次时间</th>
+      <th *ngIf="isShow" nzWidth="100px">停租时间</th>
+      <th *ngIf="isShow" nzWidth="100px">空载航行时间</th>
+      <th *ngIf="isShow" nzWidth="100px">满载航行时间</th>
+      <th *ngIf="isShow" nzWidth="100px">在港时间</th>
+
+      <th nzWidth="100px">总收入</th>
+
+      <th nzWidth="100px">收费收入/租金</th>
+      <th nzWidth="100px">运价</th>
+      <th nzWidth="100px">货运量</th>
+      <th nzWidth="100px">燃油补偿</th>
+      <th nzWidth="100px">亏舱补偿</th>
+      <th nzWidth="100px">滞期费收入</th>
+      <th nzWidth="100px">其他收入</th>
+
+      <th nzWidth="100px">变动成本支出</th>
+      <th nzWidth="100px">佣金</th>
+      <th nzWidth="100px">燃油成本</th>
+      <th nzWidth="100px">港口使费</th>
+      <th nzWidth="100px">背靠背租金</th>
+      <th nzWidth="100px">速遣费</th>
+      <th nzWidth="100px">其他支出</th>
+      <th nzWidth="100px">HSFO燃油耗量</th>
+      <th nzWidth="100px">LSFO燃油耗量</th>
+      <th nzWidth="100px">HSDO燃油耗量</th>
+      <th nzWidth="100px">LSDO燃油耗量</th>
+
+      <th nzWidth="100px">贡献毛益</th>
+      <th nzWidth="100px">期租水平</th>
+
+      <th nzWidth="100px">航次亏盈</th>
+      <th nzWidth="100px">日亏盈</th>
+      <th nzWidth="100px">毛期租水平</th>
+      <th nzWidth="100px">租金成本</th>
+      <th nzWidth="100px">自有船贡献毛益</th>
+      <th nzWidth="100px">租入船利润</th>
+      <th nzWidth="100px">开始存油-HSFO</th>
+      <th nzWidth="100px">开始存油-HSDO</th>
+      <th nzWidth="100px">开始存油-HSFO</th>
+      <th nzWidth="100px">开始存油-LSDO</th>
+      <th nzWidth="100px">航次状态</th>
+      <th nzWidth="100px">成交部门</th>
+
+      <th nzWidth="100px">成交单位</th>
+      <th nzWidth="100px">成交主办</th>
+      <th nzWidth="100px">调度主办</th>
+    </tr>
+   
+
+  
+    
+  </thead>
+  <tbody>
+      <tr *ngFor="let data of virtualTable.data">
+       <td nzWidth="100px "nzLeft>船名</td>
+       <td nzWidth="100px" nzLeft>船舶代码</td>
+       <td nzWidth="100px" nzLeft>船型(7类)</td>
+       <td nzWidth="100px" nzLeft>船舶权属</td>
+       <td nzWidth="100px" nzLeft>航次</td>
+       <td nzWidth="100px" nzLeft>航次属性</td>
+       <td nzWidth="100px" nzLeft>营运方式</td>
+       <td nzWidth="100px" nzLeft>测算版本</td>
+
+      <td nzWidth="100px"  >营运天
+
+      </td>
+
+      <td *ngIf="isShow" nzWidth="100px" >航次开始时间</td>
+      <td *ngIf="isShow" nzWidth="100px" >航次结束时间</td>
+      <td *ngIf="isShow" nzWidth="100px" >航次时间</td>
+      <td *ngIf="isShow" nzWidth="100px" >停租时间</td>
+      <td *ngIf="isShow" nzWidth="100px" >空载航行时间</td>
+      <td *ngIf="isShow" nzWidth="100px" >满载航行时间</td>
+      <td *ngIf="isShow" nzWidth="100px" >在港时间</td>
+
+      <td nzWidth="100px">总收入</td>
+
+      <td nzWidth="100px" >收费收入/租金</td>
+      <td nzWidth="100px" >运价</td>
+      <td nzWidth="100px" >货运量</td>
+      <td nzWidth="100px" >燃油补偿</td>
+      <td nzWidth="100px" >亏舱补偿</td>
+      <td nzWidth="100px" >滞期费收入</td>
+      <td nzWidth="100px" >其他收入</td>
+
+      <td nzWidth="100px" >变动成本支出</td>
+      <td nzWidth="100px" >佣金</td>
+      <td nzWidth="100px" >燃油成本</td>
+      <td nzWidth="100px" >港口使费</td>
+      <td nzWidth="100px" >背靠背租金</td>
+      <td nzWidth="100px" >速遣费</td>
+      <td nzWidth="100px" >其他支出</td>
+      <td nzWidth="100px" >dSFO燃油耗量</td>
+      <td nzWidth="100px" >LSFO燃油耗量</td>
+      <td nzWidth="100px" >dSDO燃油耗量</td>
+      <td nzWidth="100px" >LSDO燃油耗量</td>
+
+      <td nzWidth="100px">贡献毛益</td>
+      <td nzWidth="100px">期租水平</td>
+
+      <td nzWidth="100px" >航次亏盈</td>
+      <td nzWidth="100px" >日亏盈</td>
+      <td nzWidth="100px" >毛期租水平</td>
+      <td nzWidth="100px" >租金成本</td>
+      <td nzWidth="100px" >自有船贡献毛益</td>
+      <td nzWidth="100px" >租入船利润</td>
+      <td nzWidth="100px" >开始存油-dSFO</td>
+      <td nzWidth="100px" >开始存油-dSDO</td>
+      <td nzWidth="100px" >开始存油-dSFO</td>
+      <td nzWidth="100px" >开始存油-LSDO</td>
+      <td nzWidth="100px" >航次状态</td>
+      <td nzWidth="100px" >成交部门</td>
+
+      <td nzWidth="100px" >成交单位</td>
+      <td nzWidth="100px" >成交主办</td>
+      <td nzWidth="100px" >调度主办</td>
+      </tr>
+    
+  </tbody>
+</nz-table>
+</div>       
+
+
+      <button (click)="exportTable()">导出</button>
+
+      <!-- <button (click)="isshowclick()" style="font-size: 40px ; font-weight: 900px; height: 40px; width: 60px; line-height: 30px; padding-bottom: 5px;" > 
+        {{isShow?'-':'+'}}</button> -->
+
+    <!-- <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">导出</button>
+    </div> -->
