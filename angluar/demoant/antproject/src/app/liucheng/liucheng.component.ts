@@ -22,17 +22,17 @@ export class LiuchengComponent implements OnInit {
   data = {
     // 点集
     nodes: [
-      {
-        id: 'node1',
-        x: 100,
-        y: 100,
-        img: '../../assets/Group 3791.svg',
-        size: 50,
-        label: 'node1',
-        labelCfg: {
-          position: 'bottom'
-        },
-      },
+      // {
+      //   id: 'node1',
+      //   x: 100,
+      //   y: 100,
+      //   img: '../../assets/Group 3791.svg',
+      //   size: 50,
+      //   label: 'node1',
+      //   labelCfg: {
+      //     position: 'bottom'
+      //   },
+      // },
     ],
     // 边集
     edges: [],
@@ -91,21 +91,33 @@ export class LiuchengComponent implements OnInit {
     // console.log(event);
   }
 
-  y = 70
+  y = 2
   nodename = `node${this.y}`
+  addnodex = 100
+  addnodey = 90
 
   // 添加节点
   addnode() {
     const graph = this.svg;
     graph.addItem('node', {
-      x: this.y,
-      y: 400,
+      x: this.addnodex,
+      y: this.addnodey,
       size: 50,
-      label: this.nodename,
-      id: this.nodename,
+      label: `node${this.y}`,
+      id: `node${this.y}`,
       img: '../../assets/Group 3791.svg',
     });
-    this.y = this.y + 100;
+    this.y = this.y + 1;
+
+    if (this.addnodey < 200) {
+      this.addnodey = this.addnodey + 70;
+    } else {
+      this.addnodex = this.addnodex + 110;
+      this.addnodey = 90
+      if (this.addnodex > 450) {
+        return
+      }
+    }
     this.opention = graph.save().nodes
   }
 
