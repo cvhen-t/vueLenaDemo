@@ -1,0 +1,159 @@
+.middlebox {
+  display: flex;
+  box-sizing: border-box;
+  border: 1px solid #B3BFD1;
+
+  span {
+    button {
+      margin: 10px;
+      width: 104px;
+      height: 32px;
+      background: rgba(56, 130, 199, 0);
+      border: 1px solid #3882C7;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #3882C7;
+    }
+
+    button:hover {
+      background: rgba(56, 130, 199, 0.1) !important;
+    }
+    button:active{
+      background: rgba(56, 130, 199, 0.2) !important;
+    }
+  }
+}
+
+.topbox {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  span {
+    button {
+      border: 0px solid #D1E5F7;
+      background: #E7F2FB;
+      border-radius: 4px 4px 0px 0px;
+      margin-right: 4px;
+      width: 126px;
+      height: 40px;
+      font-size: 16px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #2E4060;
+    }
+  }
+}
+
+//分类选择
+nz-select {
+  margin: 0 8px 10px 0;
+  width: 240px;
+  height: 32px;
+  background: rgba(50, 150, 232, 0);
+  border: 1px solid #B3BFD1;
+  border-radius: 4px;
+}
+
+//时间选择
+nz-range-picker {
+  margin: 0 8px 12px 15px;
+  width: 244px;
+  height: 32px;
+  background: rgba(50, 150, 232, 0);
+  border: 1px solid #B3BFD1;
+  border-radius: 4px;
+}
+
+.topboxright {
+  align-items: flex-end;
+  display: flex;
+
+  p {
+    span {
+      font-size: 14px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #5F7091;
+    }
+  }
+}
+
+// 状态点
+.dian {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #519BE0;
+  border-radius: 50%;
+}
+
+.undian {
+
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #C9D1E2;
+  border-radius: 50%;
+
+}
+
+// 表格操作样式<a>
+[nz-button] {
+  margin-right: 12px;
+  width: 58px;
+  height: 14px;
+  font-size: 14px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #3882C7;
+}
+
+.readbutton {
+  margin-right: 12px;
+  width: 58px;
+  height: 14px;
+  font-size: 14px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #5F7091;
+}
+
+//top部分选中属性
+.topactivebutton {
+  background: #D1E5F7 !important;
+  border-bottom: 2px solid #519BE0;
+}
+
+//警告小图标一级样式
+.warndian {
+  color: red;
+}
+
+.unwarndian {
+  color: yellow;
+
+}
+
+//未读样式
+.readtype {
+  width: 40px;
+  height: 24px;
+  background:   #519BE0 ;
+  // opacity: 0.2;
+  border-radius: 2px;
+  color:black;
+  font-size: 12px;
+font-family: Microsoft YaHei;
+font-weight: 400;
+}
+.displayNo{
+  display: none;
+}
+//选中样式
+.checkstyle{
+  background: #E5F0FA;
+}

@@ -1,31 +1,17 @@
 <template>
   <div>
-
-
-
     <div class="box">
         <div   v-for="(item , i) in timedata" :key="i"  class="listy"
-        
-
          :class="[item.up ? 'activeClass' : 'errorClass']" >
           <div class="lispan">
-
               <p>时间：<span>{{item.time}}</span></p>
               <p>情况：<span>{{!item.up?'未掉线':'掉线'}}</span></p>
               <p>内容：<span>{{item.value}}</span></p>
-
-
           </div>
-         
          </div>
     </div>
-
-
-
-
   </div>
 </template>
-
 <script>
 export default {
     data(){
@@ -36,14 +22,10 @@ export default {
                 {time:4,up:true,value:'这是未掉线的设置'},
                 {time:1,up:false,value:'这是掉线的设置'},
                 {time:6,up:true,value:'这是未掉线的设置'},
-                {time:1,up:true,value:'这是未掉线的设置'},
-                {time:8,up:true,value:'这是未掉线的设置'},
-                {time:1,up:false,value:'这是掉线的设置'},
                 {time:1,up:false,value:'这是掉线的设置'},
             ]
         }
     }
-
 }
 </script>
 
@@ -58,7 +40,6 @@ export default {
     height:150px ;
     width: 30px;
     position: relative;
-
 }
 
 .activeClass{
@@ -66,7 +47,6 @@ export default {
 }
 .errorClass{
     background-color: rgb(14, 186, 134);
-    
 }
 
 .lispan{
@@ -74,7 +54,6 @@ export default {
     color: black;
     display: none;
     position: absolute;
-    
     left: 30px;
     top: 0px;
 }

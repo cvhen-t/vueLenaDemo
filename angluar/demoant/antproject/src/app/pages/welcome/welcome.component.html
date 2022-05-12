@@ -1,0 +1,109 @@
+<div class="topbox">
+  <div>
+    <span>
+      <button (click)="tabularData('all')" [ngClass]="topactive=='all' ? 'topactivebutton' : ''">全部
+      </button>
+    </span>
+    <span>
+      <button (click)="tabularData('PendingWork')" [ngClass]="topactive=='PendingWork' ? 'topactivebutton' : ''">待处理{{newleng}}
+      </button>
+    </span>
+    <span>
+      <button (click)="tabularData('wokeOver')" [ngClass]="topactive=='wokeOver' ? 'topactivebutton' : ''">已处理
+      </button>
+    </span>
+  </div>
+
+  <div class="topboxright">
+    <p style="margin: 0px;"><span>预警分类：</span>
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue"
+        (ngModelChange)="onSearch($event)">
+        <nz-option *ngFor="let data of option" [nzLabel]="data.nzLabel" [nzValue]="data.nzValue"></nz-option>
+      </nz-select>
+    </p>
+
+    <p style="display: flex; margin: 0px;">
+      <span style="line-height: 32px; width: 77px;">预警时间:</span>
+
+     
+      <nz-range-picker
+        [nzShowTime]="{ nzFormat: 'yyyy-MM-dd' }" nzFormat="yyyy-MM-dd "
+        ngModel
+        (ngModelChange)="onChange($event)"
+        (nzOnCalendarChange)="onCalendarChange($event)" 
+        (nzOnOk)="onOk($event)">
+      </nz-range-picker>
+
+
+
+
+    </p>
+
+
+
+
+
+  </div>
+</div>
+
+<div class="middlebox">
+  <span> <button>已选择{{setOfCheckedId.size}}项</button></span>
+
+  <span><button (click)="minbbbutton('middsetIsread')"> 设为已读 </button> </span>
+  <span><button (click)="minbbbutton('middsetIsunread')"><i nz-icon nzType="mail" nzTheme="outline"></i> 设为未读</button> </span>
+  <span><button (click)="minbbbutton('middsetIsworkover')"> 设为已处理 </button> </span>
+  <span><button (click)="minbbbutton('middsetIsunwork')"> 设为待处理 </button></span>
+</div>
+
+
+
+
+
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" [nzPageSize]=10
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+    <tr>
+      <th [(nzChecked)]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
+      <th></th>
+      <th>预警等级</th>
+      <th>预警分类</th>
+      <th>预警内容</th>
+      <th>状态</th>
+      <th>预警时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data;let i=index"  >
+      <td [nzChecked]="setOfCheckedId.has(data)" (nzCheckedChange)="onItemChecked(data, $event,i)"></td>
+      <td> <span class="readtype">{{data.readtatus==1?'未读':''}}</span> </td>
+
+      <td>
+        <span>
+          <i nz-icon nzType="warning" nzTheme="outline" [ngClass]="data.Earlylevel==1?'warndian':'unwarndian'"></i>
+        </span> {{data.Earlylevel}}级
+      </td>
+      <td>{{data.Earlyclassification}}</td>
+      <td>{{data.Earlycontent}}</td>
+      <td> <i class="dian" [ngClass]="data.newstatus==1?'dian':'undian'"></i>
+        {{
+        data.newstatus==0?'已处理':
+        data.newstatus==1?'待处理':''}}</td>
+      <td>{{data.Earlytime}}</td>
+      <td>
+        <a nz-button nzType="link" nzBlock (click)="operatetable('setreader',data)"
+          [ngClass]="((data.readtatus==0 && data.newstatus==0)||data.readtatus==0)?'readbutton':''">
+          <!-- {{data.readtatus==0?'设为未读':'设为已读'}} -->
+
+          {{((data.readtatus==0 && data.newstatus==0)||data.readtatus==0)?'设为未读':'设为已读'}}
+        </a>
+
+
+        <a nz-button nzType="link" nzBlock (click)="operatetable('setprocessing',data)"
+          [ngClass]="data.newstatus==0?'readbutton':''">{{data.newstatus==0?'设为待处理':'设为已处理'}}
+        </a>
+
+
+    </tr>
+  </tbody>
+</nz-table>
