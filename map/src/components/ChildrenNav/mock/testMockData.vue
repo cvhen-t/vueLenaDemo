@@ -1,11 +1,8 @@
 <template>
   <div>
        <button @click="getData()">获取数据</button>
-<<<<<<< HEAD
        
-=======
        <span>{{toString(test)}}</span>
->>>>>>> 2fc80ebf961c3086fe5135c6f47e0f78880f72c6
        <router-view></router-view>
 
   </div>
@@ -27,7 +24,6 @@ export default {
         console.log(res);
       });
     },
-<<<<<<< HEAD
 //数组深拷贝
     deepClone(obj) {
       var newObj = obj.constructor === Array ? [] : {};
@@ -76,7 +72,6 @@ export default {
 
   
   
-=======
 
     toString(data){
       console.log(1);
@@ -132,7 +127,6 @@ export default {
       return arr.indexOf(val);
     },
 
->>>>>>> 2fc80ebf961c3086fe5135c6f47e0f78880f72c6
   },
 };
 </script>
