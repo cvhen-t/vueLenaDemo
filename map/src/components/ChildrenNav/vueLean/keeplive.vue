@@ -1,9 +1,10 @@
 <template>
 <div>
   <keep-alive>
-        <treeSelect ></treeSelect>
-
-        <!-- <input  v-else type="text"> -->
+        <!-- <treeSelect ></treeSelect> -->
+      <component :is="treeSelect"></component>
+        <!-- <input  v-if="ishow" type="text">
+        <input  v-else type="text"> -->
   </keep-alive>
 
   <button @click="to()">to</button>
@@ -19,7 +20,9 @@ export default {
   },
   data() {
     return {
-      test:true
+      test:true,
+      treeSelect:treeSelect
+
     }
     },
   created() {

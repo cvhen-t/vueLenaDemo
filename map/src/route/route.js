@@ -113,9 +113,9 @@ export const routes = [
           },
           {
             path: '/Vuelearn/keeplive',
-            meta: {
-              keepAlive: true,
-            },
+            // meta: {
+            //   keepAlive: false,
+            // },
             name:'keeplive',
             indexnum:'4-7',
             component: ()=>import("../components/ChildrenNav/vueLean/keeplive.vue"),
