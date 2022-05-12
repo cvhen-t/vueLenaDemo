@@ -12,6 +12,7 @@
         </Row>
       </Form>
       <hr />
+      <button @click="to()">12321</button>
       <h2>店铺：</h2>
       <div class="shaplist">
         <div v-for="item in shaplist" :key="item.id" class="shapchild">
@@ -52,6 +53,9 @@ export default {
     };
   },
   methods: {
+     to(){
+      this.$router.push('/Vuelearn/keeplive');
+  },
     numchange(name = "", type = "") {
       this.datalist.map((item) => {
         if (item.name == name && type == "add") item.num++;

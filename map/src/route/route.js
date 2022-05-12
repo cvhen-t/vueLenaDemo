@@ -105,6 +105,21 @@ export const routes = [
             indexnum:'4-5',
             component: ()=>import("../components/ChildrenNav/vueLean/column.vue"),
           },
+          {
+            path: '/Vuelearn/editpen',
+            name:'编辑用户',
+            indexnum:'4-6',
+            component: ()=>import("../components/ChildrenNav/vueLean/editpen.vue"),
+          },
+          {
+            path: '/Vuelearn/keeplive',
+            meta: {
+              keepAlive: true,
+            },
+            name:'keeplive',
+            indexnum:'4-7',
+            component: ()=>import("../components/ChildrenNav/vueLean/keeplive.vue"),
+          },
         ],
       },  
   ]

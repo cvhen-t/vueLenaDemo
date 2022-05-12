@@ -63,7 +63,11 @@
       <!-- 内容 -->
       <el-main>
         <div class="mainstyle">
-          <router-view></router-view>
+             <keep-alive>
+                <router-view v-if="$route.meta.keepAlive"></router-view>
+            </keep-alive>
+              <router-view v-if="!$route.meta.keepAlive"></router-view>
+          <!-- <router-view></router-view> -->
         </div>
       </el-main>
     </el-container>
