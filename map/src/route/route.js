@@ -1,3 +1,11 @@
+/*
+ * @Author: cc ‘2327506380@qq.com’
+ * @Date: 2022-08-22 10:14:32
+ * @LastEditors: cc ‘2327506380@qq.com’
+ * @LastEditTime: 2023-01-10 17:45:01
+ * @FilePath: \map\src\route\route.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import VueRouter from 'vue-router';
 
 export const routes = [
@@ -119,6 +127,33 @@ export const routes = [
                 name: 'keeplive',
                 indexnum: '4-7',
                 component: () => import('../components/ChildrenNav/vueLean/keeplive.vue')
+            },
+            {
+                path: '/Vuelearn/Shensbox',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: '放大伸缩框',
+                indexnum: '4-8',
+                component: () => import('../components/ChildrenNav/vueLean/Shensbox.vue')
+            },
+            // {
+            //     path: '/Vuelearn/monaco-editor',
+            //     // meta: {
+            //     //   keepAlive: false,
+            //     // },
+            //     name: 'monaco-editor',
+            //     indexnum: '4-9',
+            //     component: () => import('../components/ChildrenNav/vueLean/monaco-editor.vue')
+            // },
+            {
+                path: '/Vuelearn/el-collapse',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: 'el折叠面板禁用点击',
+                indexnum: '4-10',
+                component: () => import('../components/ChildrenNav/vueLean/el-collapse.vue')
             }
         ]
     },
@@ -142,11 +177,26 @@ export const routes = [
                 component: () => import('../components/ChildrenNav/MangerCtrl/upProjectPage.vue')
             }
         ]
+    },
+    {
+        path: '/qianKun',
+        name: '乾坤应用',
+        indexnum: '6',
+        icon: 'el-icon-s-data',
+        component: () => import('@/components/Navcomponents/qianKun'),
+        children: [
+            {
+                path: '/QingKun/qinKunVue3',
+                name: 'vue3',
+                indexnum: '6-1',
+                component: () => import('../components/ChildrenNav/QingKun/qinKunVue3.vue')
+            }
+        ]
     }
 ];
 
 const router = new VueRouter({
-    mode: 'hash',
+    mode: 'history',
     routes // (缩写) 相当于 routes: routes
 });
 

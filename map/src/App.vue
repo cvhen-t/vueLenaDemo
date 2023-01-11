@@ -127,6 +127,7 @@ body {
     /* background-image: url(../src/assets/backjpg.jpeg); */
     /* background-color: #669999 !important; */
     height: 80% !important;
+    overflow: auto;
 }
 .el-menu {
     color: #000000;

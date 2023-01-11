@@ -23,6 +23,8 @@
         "jsonlint": "^1.6.3",
         "mockjs": "^1.1.0",
         "moment": "^2.29.4",
+        "monaco-editor-webpack-plugin": "^7.0.1",
+        "qiankun": "^2.8.4",
         "rimraf": "^3.0.2",
         "script-loader": "^0.7.2",
         "view-design": "^4.7.0",
