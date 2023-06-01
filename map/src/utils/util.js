@@ -1,6 +1,13 @@
 import * as fs from 'fs';
-function addpage() {
+export function addpage() {
     console.log(fs);
 }
 
-export { addpage };
+export const loadScript = (src, callback) => {
+    let js = document.createElement('script');
+    js.onload = () => {
+        callback && callback();
+    };
+    js.src = src;
+    document.body.appendChild(js);
+};

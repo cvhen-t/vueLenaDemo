@@ -102,7 +102,7 @@ export default {
     data() {
         return {
             routes,
-            isCollapse: false
+            isCollapse: true
         };
     },
     created() {

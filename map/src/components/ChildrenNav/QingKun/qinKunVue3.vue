@@ -2,7 +2,7 @@
  * @Author: cc ‘2327506380@qq.com’
  * @Date: 2023-01-10 15:50:05
  * @LastEditors: cc ‘2327506380@qq.com’
- * @LastEditTime: 2023-01-11 17:27:59
+ * @LastEditTime: 2023-01-12 17:33:32
  * @FilePath: \map\src\components\ChildrenNav\QingKun\qinKunVue3.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,6 +16,7 @@ import { start } from 'qiankun';
 export default {
     mounted() {
         if (!window.qiankunStarted) {
+            console.log(1);
             window.qiankunStarted = true;
             start();
         }

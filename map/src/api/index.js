@@ -13,3 +13,12 @@ export const putProjectToServe = (formData) => {
         config
     });
 };
+
+// 查询手动校核列表
+export const manualCheckList = (data) => {
+    return request({
+        url: '/pms-amap-check-service/DataVerificationProvinceController/manualCheckList',
+        method: 'post',
+        data
+    });
+};

@@ -26,6 +26,21 @@ export const routes = [
         ]
     },
     {
+        path: '/chat',
+        name: '聊天',
+        indexnum: '1',
+        icon: 'el-icon-s-data',
+        component: () => import('@/components/Navcomponents/chat.vue'),
+        children: [
+            {
+                path: '/chat/chatDemo',
+                name: '聊天',
+                indexnum: '1-1',
+                component: () => import('../components/ChildrenNav/chat/chatDemo.vue')
+            }
+        ]
+    },
+    {
         path: '/MAP01',
         name: '地图',
         indexnum: '2',
@@ -154,6 +169,33 @@ export const routes = [
                 name: 'el折叠面板禁用点击',
                 indexnum: '4-10',
                 component: () => import('../components/ChildrenNav/vueLean/el-collapse.vue')
+            },
+            {
+                path: '/Vuelearn/packageComponent',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: '组件封装，v-model的使用',
+                indexnum: '4-11',
+                component: () => import('../components/ChildrenNav/vueLean/packageComponent.vue')
+            },
+            {
+                path: '/Vuelearn/canvas',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: 'canvas',
+                indexnum: '4-12',
+                component: () => import('../components/ChildrenNav/vueLean/canvas.vue')
+            },
+            {
+                path: '/Vuelearn/layerWord',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: '印章移动',
+                indexnum: '4-13',
+                component: () => import('../components/ChildrenNav/vueLean/layerWord.vue')
             }
         ]
     },
