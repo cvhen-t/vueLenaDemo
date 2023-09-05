@@ -22,3 +22,11 @@ export const manualCheckList = (data) => {
         data
     });
 };
+
+// 查询手动校核列表
+export const getGeoJson = (code) => {
+    return request({
+        url: `https://geo.datav.aliyun.com/areas_v3/bound/${code}_full.json`,
+        method: 'get'
+    });
+};

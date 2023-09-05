@@ -13,7 +13,7 @@ export const routes = [
     {
         path: '/HellWord',
         name: '首页',
-        indexnum: '1',
+        indexnum: '1-1',
         icon: 'el-icon-s-data',
         component: () => import('@/components/Navcomponents/HelloWorld'),
         children: [
@@ -49,7 +49,7 @@ export const routes = [
         children: [
             {
                 path: '/HellWord/mapTest',
-                name: '百度地图',
+                name: 'MapBox地图',
                 indexnum: '2-1',
                 component: () => import('../components/ChildrenNav/MAP01/mapTest.vue')
             }
