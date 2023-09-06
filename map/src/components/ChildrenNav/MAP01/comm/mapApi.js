@@ -8,15 +8,20 @@ class mapBoxApi {
     //添加图层
     addRoutelayer(id, data, paintOpt = { color: '#14dbf5', width: 1, opacity: 1 }) {
         if (this.map.getLayer(id)) return;
-        map.addSource(id, { type: 'geojson', data });
+
         this.map.addLayer({
             id: id,
             type: 'line',
-            source: id,
+            source: {
+                type: 'geojson',
+                lineMetrics: true,
+                // generateId: true,
+                data
+            },
             paint: {
                 'line-width': paintOpt.width,
                 'line-opacity': paintOpt.opacity,
-                'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#ffffff', paintOpt.color]
+                'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#0b4975', paintOpt.color]
                 // 'line-color': ['', ['get', 'status'], 'active', '#FF0000', paintOpt.color]
             }
         });
@@ -33,27 +38,24 @@ class mapBoxApi {
             curve: 1
         });
     }
-    test(hoveredStateIds) {
+    // 设置地图事件方法
+    onSetMapEvent(callBack, type = 'click', LayerId = '') {
         let that = this;
-        let hoveredStateId = null;
-        that.map.on('click', hoveredStateIds, function (e) {
-            that.map.getCanvas().style.cursor = 'pointer';
-            if (e.features.length > 0) {
-                if (hoveredStateId) {
-                    console.log(hoveredStateId);
-                    that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: true });
-                }
-                hoveredStateId = e.features[0].properties.id;
-                that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: true });
-            }
-        });
-        // that.map.on('mouseleave', hoveredStateIds, function (e) {
-        //     that.map.getCanvas().style.cursor = '';
-        //     if (hoveredStateId) {
-        //         that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: false });
-        //     }
-        //     hoveredStateId = null;
-        // });
+        if (!LayerId) {
+            that.map.on(type, callBack);
+        } else {
+            that.map.on(type, LayerId, callBack);
+        }
+    }
+
+    // 取消设置地图事件方法
+    offSetMapEvent(callBack, type = 'click', LayerId = '') {
+        let that = this;
+        if (!LayerId) {
+            that.map.off(type, callBack);
+        } else {
+            that.map.off(type, LayerId, callBack);
+        }
     }
 }
 export default mapBoxApi;

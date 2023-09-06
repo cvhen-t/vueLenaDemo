@@ -3,7 +3,8 @@ let bjToZtPlanA = {
     features: [
         {
             type: 'Feature',
-            properties: { id: 'bjToZtPlanA' },
+            id: 1,
+            properties: { id: 1 },
             geometry: {
                 coordinates: [
                     [116.36663290676319, 39.902845282438136],
@@ -20,9 +21,10 @@ let bjToZtPlanB = {
     type: 'FeatureCollection',
     features: [
         {
+            id: 2,
             type: 'Feature',
             properties: {
-                id: 'bjToZtPlanB'
+                id: 2
             },
             geometry: {
                 coordinates: [
@@ -41,8 +43,9 @@ let bjToZtPlanC = {
     features: [
         {
             type: 'Feature',
+            id: 3,
             properties: {
-                id: 'bjToZtPlanC'
+                id: 3
             },
             geometry: {
                 coordinates: [
@@ -61,8 +64,29 @@ let linePlan = {
     bjToZtPlanB,
     bjToZtPlanC
 };
+let oldHome = {
+    type: 'FeatureCollection',
+    features: [
+        {
+            id: 2,
+            type: 'Feature',
+            properties: { id: 2 },
+            geometry: {
+                coordinates: [
+                    [116.37713674240064, 28.68259721758372],
+                    [116.37770972911903, 28.681307006221928],
+                    [116.38087388910805, 28.68265865582353],
+                    [116.38045369884776, 28.68352995789023],
+                    [116.37715584195774, 28.682574876396856],
+                    [116.37769699608094, 28.681323762315287]
+                ],
+                type: 'LineString'
+            }
+        }
+    ]
+};
 
-export { linePlan };
+export { linePlan, oldHome };
 
 // "circle-color": [
 //     "case",
