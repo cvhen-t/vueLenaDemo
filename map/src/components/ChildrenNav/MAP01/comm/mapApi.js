@@ -8,19 +8,16 @@ class mapBoxApi {
     //添加图层
     addRoutelayer(id, data, paintOpt = { color: '#14dbf5', width: 1, opacity: 1 }) {
         if (this.map.getLayer(id)) return;
+        map.addSource(id, { type: 'geojson', data });
         this.map.addLayer({
             id: id,
             type: 'line',
-            source: {
-                type: 'geojson',
-                lineMetrics: true,
-                data
-            },
+            source: id,
             paint: {
                 'line-width': paintOpt.width,
                 'line-opacity': paintOpt.opacity,
-                // 'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#ffffff', paintOpt.color],
-                'line-color': ['match', ['get', 'status'], 'active', '#FF0000', paintOpt.color]
+                'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#ffffff', paintOpt.color]
+                // 'line-color': ['', ['get', 'status'], 'active', '#FF0000', paintOpt.color]
             }
         });
     }
@@ -39,14 +36,15 @@ class mapBoxApi {
     test(hoveredStateIds) {
         let that = this;
         let hoveredStateId = null;
-        that.map.on('mouseenter', hoveredStateIds, function (e) {
+        that.map.on('click', hoveredStateIds, function (e) {
             that.map.getCanvas().style.cursor = 'pointer';
             if (e.features.length > 0) {
                 if (hoveredStateId) {
-                    that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { status: 'active' });
+                    console.log(hoveredStateId);
+                    that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: true });
                 }
                 hoveredStateId = e.features[0].properties.id;
-                that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { status: 'active' });
+                that.map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: true });
             }
         });
         // that.map.on('mouseleave', hoveredStateIds, function (e) {

@@ -105,7 +105,7 @@ export default {
             mapboxgl.accessToken = 'pk.eyJ1Ijoid3V5YW5nd2VuIiwiYSI6ImNrcWZ5MmhwcDE5eTkyeG56ZXVyY3VsZ3EifQ.90L3IQF1bIUc1qTShDlq-A';
             window.map = new mapboxgl.Map({
                 container: this.$refs.basicMapbox, // container id 绑定的组件的id
-                style: 'mapbox://styles/wuyangwen/ckqfzjrds36ch18prcds22idm/draft', // style URL
+                style: 'mapbox://styles/wuyangwen/ckqfzjrds36ch18prcds22idm', // style URL
                 center: [106.02806614743885, 33.26824423858698], // starting position [lng, lat]
                 zoom: 3 // starting zoom
             });
@@ -133,7 +133,7 @@ export default {
                 this.cleacarLayers();
                 return;
             }
-            mmapBoxApiObj.addRoutelayer('lineToPlan', res, { color: '#077692', width: 5, opacity: 0.3 });
+            mmapBoxApiObj.addRoutelayer('lineToPlan', res, { color: '#077692', width: 14, opacity: 0.3 });
             mmapBoxApiObj.test('lineToPlan');
         },
         //清除图层
