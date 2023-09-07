@@ -62,12 +62,14 @@
 
 </template>
 <script>
+import style from './comm/style/index.json';
 import { zginit } from './comm/json/zgint';
-import { linePlan, oldHome } from './comm/geoJson';
+import { linePlan, oldHome } from './comm/json/geoJson';
 import mapboxgl from 'mapbox-gl';
 import mapBoxApi from './comm/mapApi';
 import { togeoJson, putStrNowDate, copyText } from './comm/util.js';
 let mapBoxApiClass = null;
+let isuseLocation = true;
 export default {
     props: {
         mapWidth: {
@@ -79,6 +81,7 @@ export default {
     },
     data() {
         return {
+            styleUrl: 'mapbox://styles/wuyangwen/ckqfzjrds36ch18prcds22idm',
             provincelist: [],
             provinceValue: '',
             previousPro: '',
@@ -104,10 +107,11 @@ export default {
             mapboxgl.accessToken = 'pk.eyJ1Ijoid3V5YW5nd2VuIiwiYSI6ImNrcWZ5MmhwcDE5eTkyeG56ZXVyY3VsZ3EifQ.90L3IQF1bIUc1qTShDlq-A';
             window.map = new mapboxgl.Map({
                 container: this.$refs.basicMapbox, // container id 绑定的组件的id
-                style: 'mapbox://styles/wuyangwen/ckqfzjrds36ch18prcds22idm', // style URL
+                style: isuseLocation ? style : this.styleUrl, // style URL
                 center: [106.02806614743885, 33.26824423858698], // starting position [lng, lat]
                 zoom: 3 // starting zoom
             });
+            // E:\demo/vueLenaDemo/map/src/components/ChildrenNav/MAP01/comm/style/index.json
             mapBoxApiClass = new mapBoxApi(map);
             map.on('load', (e) => {});
         },
@@ -237,19 +241,23 @@ export default {
         changeLinePlan(hoveredStateIds) {
             let hoveredStateId = null;
             let oldhoveredStateId = null;
-            mapBoxApiClass.clickMap(hoveredStateIds, (e) => {
-                map.getCanvas().style.cursor = 'pointer';
-                if (e.features.length > 0) {
-                    hoveredStateId = e.features[0].properties.id;
-                    if (hoveredStateId) {
-                        map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: true });
-                        if (oldhoveredStateId) {
-                            map.setFeatureState({ source: hoveredStateIds, id: oldhoveredStateId }, { hover: false });
+            mapBoxApiClass.onSetMapEvent(
+                (e) => {
+                    map.getCanvas().style.cursor = 'pointer';
+                    if (e.features.length > 0) {
+                        hoveredStateId = e.features[0].properties.id;
+                        if (hoveredStateId) {
+                            map.setFeatureState({ source: hoveredStateIds, id: hoveredStateId }, { hover: true });
+                            if (oldhoveredStateId) {
+                                map.setFeatureState({ source: hoveredStateIds, id: oldhoveredStateId }, { hover: false });
+                            }
+                            oldhoveredStateId = hoveredStateId;
                         }
-                        oldhoveredStateId = hoveredStateId;
                     }
-                }
-            });
+                },
+                'click',
+                hoveredStateIds
+            );
         },
         //清除绘制路线
         cleaLayerAndSourceToregex(regex = []) {
@@ -312,6 +320,6 @@ export default {
     display: flex;
     align-items: center;
 }
-@import url('https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css');
+@import './comm/style/map.css';
 </style>
 
