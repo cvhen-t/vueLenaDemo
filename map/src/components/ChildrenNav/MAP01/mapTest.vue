@@ -1,18 +1,23 @@
 <template>
     <div style="height:700px;width:100%;">
-        <div style="margin-bottom: 10px;display: flex; align-items: center; ">
+        <div class="felxBox">
             <div class="maginten">
                 <el-button size="mini"
                            @click="fltToOrientation">重置 </el-button>
             </div>
 
-            <div class="maginten">
+            <div style="    margin: 0;"
+                 class="maginten felxBox">
                 <span class="fontSize">绘制开关：</span>
                 <el-switch v-model="openDrawLine"
                            @change="drawLinechange"
                            active-color="#13ce66"
                            inactive-color="#909399">
                 </el-switch>
+                <div @click=" cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/]) ,drawLine=[];"
+                     v-show="openDrawLine"> <i style="font-size: 17px;color: red; margin: 0 10px; "
+                       class="el-icon-delete"></i></div>
+
             </div>
 
             <div class="maginten">
@@ -33,12 +38,9 @@
                         title="地图操作"
                         width="400"
                         trigger="click">
-                <div style="margin-bottom: 10px;display: flex; align-items: center; ">
+                <div class="felxBox">
                     <!-- <el-button size="mini"
                                @click="drawLine">绘制路线 </el-button> -->
-                    <el-button size="mini"
-                               @click="cleaDrawLine">清除/取消路线 </el-button>
-
                     <el-button size="mini"
                                @click="toHome">老家 </el-button>
                 </div>
@@ -84,7 +86,11 @@ export default {
             activeCoror: '#ec1877',
             openDrawLine: false,
             //绘制保持的数据
-            drawLine: []
+            drawLine: [],
+            //当前坐标
+            clickPoint: [],
+            //预绘制图层递增id
+            sourIndex: 1
         };
     },
     mounted() {
@@ -131,32 +137,69 @@ export default {
                 this.previousPro = e;
             }
         },
+        //取点--点击鼠标获取坐标
+        clickGetlngLat(e) {
+            this.clickPoint = [[e.lngLat.lng, e.lngLat.lat]];
+            this.drawLine.push([e.lngLat.lng, e.lngLat.lat]);
+
+            mapBoxApiClass.onSetMapEvent(this.mousemoveGetlngLat, 'mousemove');
+            if (map.getSource(`sours${this.sourIndex}`)) {
+                mapBoxApiClass.addRoutelayer(`sours${this.sourIndex}`, `sours${this.sourIndex}`, {
+                    color: '#077692',
+                    width: 1,
+                    opacity: 1,
+                    opacity: [2, 2]
+                });
+                this.sourIndex = this.sourIndex + 1;
+            }
+        },
+        //预绘制，根据鼠标移动画虚线
+        mousemoveGetlngLat(e) {
+            // 获取鼠标的坐标
+            var coords = e.lngLat;
+            // 创建虚线路径
+            var lineCoordinates = [this.clickPoint[0]];
+            lineCoordinates.push([coords.lng, coords.lat]);
+            let res = togeoJson(lineCoordinates);
+            // 清除之前的虚线图层（如果存在）
+            if (map.getSource(`sours${this.sourIndex}`)) {
+                map.getSource(`sours${this.sourIndex}`).setData(res);
+            } else {
+                mapBoxApiClass.addRoutelayer(`sours${this.sourIndex}`, res, { color: 'red', width: 1, opacity: 1, dasharray: [2, 2] });
+            }
+        },
+        //绘制--根据鼠标右键点击获取的坐标绘制线路
+        drawLineToclickGetlngLat(e) {
+            if (!this.drawLine.length > 0) return;
+            let res = togeoJson(this.drawLine);
+            copyText(JSON.stringify(res), '路线geoJson数据复制成功');
+            mapBoxApiClass.addRoutelayer(`draw${putStrNowDate()}`, res, { color: '#077692', width: 1, opacity: 1 });
+            mapBoxApiClass.offSetMapEvent(this.mousemoveGetlngLat, 'mousemove');
+            this.cleaLayerAndSourceToregex([/^sours|^source/]);
+            this.drawLine = [];
+            this.sourIndex = 1;
+        },
         // 绘制开关
         drawLinechange(value) {
             if (!value) {
                 mapBoxApiClass.offSetMapEvent(this.clickGetlngLat, 'click');
                 mapBoxApiClass.offSetMapEvent(this.drawLineToclickGetlngLat, 'contextmenu');
                 this.drawLine = [];
-                this.cleaDrawLine();
+                this.cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/]);
+                map.getCanvas().style.cursor = 'pointer';
+                this.sourIndex = 1;
             } else {
+                map.getCanvas().style.cursor = 'crosshair';
                 mapBoxApiClass.onSetMapEvent(this.clickGetlngLat, 'click');
                 mapBoxApiClass.onSetMapEvent(this.drawLineToclickGetlngLat, 'contextmenu');
             }
         },
-        //点击获取坐标
-        clickGetlngLat(e) {
-            this.drawLine.push([e.lngLat.lng, e.lngLat.lat]);
-        },
-        //根据点击获取的坐标绘制线路
-        drawLineToclickGetlngLat(e) {
-            let res = togeoJson(this.drawLine);
-            copyText(JSON.stringify(res), '路线geoJson数据复制成功');
-            mapBoxApiClass.addRoutelayer(`lay${putStrNowDate()}`, res, { color: '#077692', width: 1, opacity: 1 });
-            this.drawLine = [];
-        },
 
         //重置
         fltToOrientation() {
+            this.initVueData();
+            this.drawLinechange();
+            this.cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/]);
             this.cleacarLayers();
             mapBoxApiClass.flyToCenten(this.routeGeoJson, 3);
         },
@@ -209,17 +252,18 @@ export default {
             });
         },
         //清除绘制路线
-        cleaDrawLine() {
-            const regex = /^lay|^source/;
-            // 获取地图中所有图层和源
-            const allLayersAndSources = map.getStyle().layers.concat(map.getStyle().sources);
-            // 遍历图层和源并移除匹配的项
-            allLayersAndSources.forEach((layerOrSource) => {
-                if (layerOrSource && layerOrSource.id && layerOrSource.id.match(regex)) {
-                    // 移除匹配的图层或源
-                    map.removeLayer(layerOrSource.id);
-                    map.removeSource(layerOrSource.id);
-                }
+        cleaLayerAndSourceToregex(regex = []) {
+            regex.forEach((reg) => {
+                // 获取地图中所有图层和源
+                const allLayersAndSources = map.getStyle().layers.concat(map.getStyle().sources);
+                // 遍历图层和源并移除匹配的项
+                allLayersAndSources.forEach((layerOrSource) => {
+                    if (layerOrSource && layerOrSource.id && layerOrSource.id.match(reg)) {
+                        // 移除匹配的图层或源
+                        map.removeLayer(layerOrSource.id);
+                        map.removeSource(layerOrSource.id);
+                    }
+                });
             });
         },
         //清除图层
@@ -233,6 +277,16 @@ export default {
                 map.removeSource(`${this.previousPro}`);
                 this.previousPro = '';
             }
+        },
+        //初始化vue数据
+        initVueData() {
+            this.openDrawLine = false;
+            //绘制保持的数;
+            this.drawLine = [];
+            //当前坐;
+            this.clickPoint = [];
+            //预绘制图层递增i;
+            this.sourIndex = 1;
         }
     },
     computed: {
@@ -252,6 +306,11 @@ export default {
 }
 .fontSize {
     font-size: 13px;
+}
+.felxBox {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 @import url('https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css');
 </style>

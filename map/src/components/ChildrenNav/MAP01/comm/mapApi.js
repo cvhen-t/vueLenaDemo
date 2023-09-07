@@ -8,22 +8,26 @@ class mapBoxApi {
     //添加图层
     addRoutelayer(id, data, paintOpt = { color: '#14dbf5', width: 1, opacity: 1 }) {
         if (this.map.getLayer(id)) return;
-
+        let obj = {
+            'line-width': paintOpt.width || 1,
+            'line-opacity': paintOpt.opacity,
+            'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#0b4975', paintOpt.color]
+            // 'line-color': ['', ['get', 'status'], 'active', '#FF0000', paintOpt.color]
+        };
+        if (paintOpt.dasharray) obj['line-dasharray'] = paintOpt.dasharray;
         this.map.addLayer({
             id: id,
             type: 'line',
-            source: {
-                type: 'geojson',
-                lineMetrics: true,
-                // generateId: true,
-                data
-            },
-            paint: {
-                'line-width': paintOpt.width,
-                'line-opacity': paintOpt.opacity,
-                'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#0b4975', paintOpt.color]
-                // 'line-color': ['', ['get', 'status'], 'active', '#FF0000', paintOpt.color]
-            }
+            source:
+                typeof data === 'string'
+                    ? data
+                    : {
+                          type: 'geojson',
+                          lineMetrics: true,
+                          // generateId: true,
+                          data
+                      },
+            paint: obj
         });
     }
 
