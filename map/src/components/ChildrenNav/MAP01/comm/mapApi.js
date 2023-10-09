@@ -6,18 +6,22 @@ class mapBoxApi {
     }
 
     //添加图层
-    addRoutelayer(id, data, paintOpt = { color: '#14dbf5', width: 1, opacity: 1 }) {
+    addRoutelayer(id, type = 'line', data, paintOpt = { color: '#14dbf5', width: 1, opacity: 1 }) {
         if (this.map.getLayer(id)) return;
         let obj = {
             'line-width': paintOpt.width || 1,
             'line-opacity': paintOpt.opacity,
             'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], '#0b4975', paintOpt.color]
-            // 'line-color': ['', ['get', 'status'], 'active', '#FF0000', paintOpt.color]
         };
         if (paintOpt.dasharray) obj['line-dasharray'] = paintOpt.dasharray;
-        this.map.addLayer({
-            id: id,
-            type: 'line',
+        let layout = {
+            'text-field': ['get', 'title'], // 正确的属性名称是 'text-field'
+            'text-size': 16,
+            'text-anchor': 'top'
+        };
+        let addLayerData = {
+            id,
+            type,
             source:
                 typeof data === 'string'
                     ? data
@@ -26,15 +30,19 @@ class mapBoxApi {
                           lineMetrics: true,
                           // generateId: true,
                           data
-                      },
-            paint: obj
-        });
+                      }
+        };
+        if (type === 'symbol') addLayerData['layout'] = layout;
+        if (type === 'line') addLayerData['paint'] = obj;
+        this.map.addLayer(addLayerData);
     }
 
     //定位
     flyToCenten(data, zoom, centerList = []) {
-        const centerObj = turf.centerOfMass(data);
-        let center = centerObj.geometry.coordinates;
+        let center = [];
+        if (data) {
+            center = turf.centerOfMass(data).geometry.coordinates;
+        }
         map.flyTo({
             center: centerList.length > 0 ? centerList : center,
             zoom,
@@ -60,6 +68,17 @@ class mapBoxApi {
         } else {
             that.map.off(type, LayerId, callBack);
         }
+    }
+
+    //获取线路长度
+    getLineDistance(data) {
+        return turf.length(data);
+    }
+    //获取中心点
+    getCenten(data) {
+        const centerObj = turf.centerOfMass(data);
+        let center = centerObj.geometry.coordinates;
+        return center;
     }
 }
 export default mapBoxApi;

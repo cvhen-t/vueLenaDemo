@@ -1,6 +1,6 @@
 import { Message } from 'element-ui';
 
-export const togeoJson = (arr, type = 'LineString') => {
+export const togeoJson = (arr, type = 'LineString', text = '') => {
     let res = {
         type: 'FeatureCollection',
         features: [
@@ -8,6 +8,7 @@ export const togeoJson = (arr, type = 'LineString') => {
                 id: 2,
                 type: 'Feature',
                 properties: {
+                    title: text,
                     id: 2
                 },
                 geometry: {

@@ -14,7 +14,7 @@
                            active-color="#13ce66"
                            inactive-color="#909399">
                 </el-switch>
-                <div @click=" cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/]) ,drawLine=[];"
+                <div @click=" cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/, /^text|^source/]) ,drawLine=[];"
                      v-show="openDrawLine"> <i style="font-size: 17px;color: red; margin: 0 10px; "
                        class="el-icon-delete"></i></div>
 
@@ -41,8 +41,19 @@
                 <div class="felxBox">
                     <!-- <el-button size="mini"
                                @click="drawLine">绘制路线 </el-button> -->
+                    <!-- <el-button size="mini"
+                               @click="toHome">老家 </el-button> -->
+                    <el-input size="mini"
+                              @blur="tocenterList"
+                              v-model="centerList"
+                              placeholder="请输入内容"></el-input>
+
                     <el-button size="mini"
-                               @click="toHome">老家 </el-button>
+                               @click=" isOpenGetLineDistance=!isOpenGetLineDistance,drawLinechange(isOpenGetLineDistance)">{{ `${!isOpenGetLineDistance?'开启':'关闭'}测量工具` }}</el-button>
+
+                    <!-- <el-button size="mini"
+                               @click="toHome">角度测量工具</el-button> -->
+
                 </div>
                 <el-button size="mini"
                            slot="reference">工具</el-button>
@@ -67,8 +78,11 @@ import { zginit } from './comm/json/zgint';
 import { linePlan, oldHome } from './comm/json/geoJson';
 import mapboxgl from 'mapbox-gl';
 import mapBoxApi from './comm/mapApi';
+import drawingTool from './comm/feature/drawingTool';
+
 import { togeoJson, putStrNowDate, copyText } from './comm/util.js';
 let mapBoxApiClass = null;
+let drawingToolClass = null;
 let isuseLocation = true;
 export default {
     props: {
@@ -82,6 +96,8 @@ export default {
     data() {
         return {
             styleUrl: 'mapbox://styles/wuyangwen/ckqfzjrds36ch18prcds22idm',
+            style3d: 'mapbox://styles/mapbox/mapbox-gl-3d-buildings',
+            centerList: '',
             provincelist: [],
             provinceValue: '',
             previousPro: '',
@@ -93,7 +109,9 @@ export default {
             //当前坐标
             clickPoint: [],
             //预绘制图层递增id
-            sourIndex: 1
+            sourIndex: 1,
+            // 是否开启测量
+            isOpenGetLineDistance: false
         };
     },
     mounted() {
@@ -106,14 +124,19 @@ export default {
             let that = this;
             mapboxgl.accessToken = 'pk.eyJ1Ijoid3V5YW5nd2VuIiwiYSI6ImNrcWZ5MmhwcDE5eTkyeG56ZXVyY3VsZ3EifQ.90L3IQF1bIUc1qTShDlq-A';
             window.map = new mapboxgl.Map({
-                container: this.$refs.basicMapbox, // container id 绑定的组件的id
-                style: isuseLocation ? style : this.styleUrl, // style URL
-                center: [106.02806614743885, 33.26824423858698], // starting position [lng, lat]
-                zoom: 3 // starting zoom
+                container: this.$refs.basicMapbox,
+                style: isuseLocation ? style : this.style3d, //
+                center: [106.02806614743885, 33.26824423858698],
+                zoom: 3
             });
-            // E:\demo/vueLenaDemo/map/src/components/ChildrenNav/MAP01/comm/style/index.json
             mapBoxApiClass = new mapBoxApi(map);
+            drawingToolClass = new drawingTool(map);
             map.on('load', (e) => {});
+        },
+        tocenterList() {
+            let data = this.centerList.split(',');
+            console.log(data);
+            mapBoxApiClass.flyToCenten('', 16, data);
         },
         //初始化下拉省份
         initprovinceList() {
@@ -132,10 +155,10 @@ export default {
                 if (map.getLayer(`${this.previousPro}`)) {
                     map.removeLayer(`${this.previousPro}`);
                     map.removeSource(`${this.previousPro}`);
-                    mapBoxApiClass.addRoutelayer(`${e}`, obj, { color: this.activeCoror, width: 1, opacity: 1 });
+                    mapBoxApiClass.addRoutelayer(`${e}`, 'line', obj, { color: this.activeCoror, width: 1, opacity: 1 });
                     mapBoxApiClass.flyToCenten(obj, 4);
                 } else {
-                    mapBoxApiClass.addRoutelayer(`${e}`, obj, { color: this.activeCoror, width: 1, opacity: 1 });
+                    mapBoxApiClass.addRoutelayer(`${e}`, 'line', obj, { color: this.activeCoror, width: 1, opacity: 1 });
                     mapBoxApiClass.flyToCenten(obj, 4);
                 }
                 this.previousPro = e;
@@ -148,7 +171,7 @@ export default {
 
             mapBoxApiClass.onSetMapEvent(this.mousemoveGetlngLat, 'mousemove');
             if (map.getSource(`sours${this.sourIndex}`)) {
-                mapBoxApiClass.addRoutelayer(`sours${this.sourIndex}`, `sours${this.sourIndex}`, {
+                mapBoxApiClass.addRoutelayer(`sours${this.sourIndex}`, 'line', `sours${this.sourIndex}`, {
                     color: '#077692',
                     width: 1,
                     opacity: 1,
@@ -168,18 +191,38 @@ export default {
             // 清除之前的虚线图层（如果存在）
             if (map.getSource(`sours${this.sourIndex}`)) {
                 map.getSource(`sours${this.sourIndex}`).setData(res);
+                if (map.getSource(`text${this.sourIndex}`)) {
+                    let datas = map.getSource(`sours${this.sourIndex}`)._data;
+                    const centerCoordinates = mapBoxApiClass.getCenten(datas);
+                    const length = mapBoxApiClass.getLineDistance(datas);
+                    map.getSource(`text${this.sourIndex}`).setData(togeoJson(centerCoordinates, 'Point', `${length.toFixed(2)}Km`));
+                }
             } else {
-                mapBoxApiClass.addRoutelayer(`sours${this.sourIndex}`, res, { color: 'red', width: 1, opacity: 1, dasharray: [2, 2] });
+                mapBoxApiClass.addRoutelayer(`sours${this.sourIndex}`, 'line', res, {
+                    color: 'red',
+                    width: 1,
+                    opacity: 1,
+                    dasharray: [2, 2]
+                });
+
+                mapBoxApiClass.addRoutelayer(`text${this.sourIndex}`, 'symbol', togeoJson([], 'Point', ``));
             }
         },
         //绘制--根据鼠标右键点击获取的坐标绘制线路
         drawLineToclickGetlngLat(e) {
+            if (this.isOpenGetLineDistance) {
+                this.cleaLayerAndSourceToregex([/^sours|^source/, /^text|^source/]);
+                mapBoxApiClass.offSetMapEvent(this.mousemoveGetlngLat, 'mousemove');
+                this.drawLine = [];
+                this.sourIndex = 1;
+                return;
+            }
             if (!this.drawLine.length > 0) return;
             let res = togeoJson(this.drawLine);
             copyText(JSON.stringify(res), '路线geoJson数据复制成功');
-            mapBoxApiClass.addRoutelayer(`draw${putStrNowDate()}`, res, { color: '#077692', width: 1, opacity: 1 });
+            mapBoxApiClass.addRoutelayer(`draw${putStrNowDate()}`, 'line', res, { color: '#077692', width: 1, opacity: 1 });
             mapBoxApiClass.offSetMapEvent(this.mousemoveGetlngLat, 'mousemove');
-            this.cleaLayerAndSourceToregex([/^sours|^source/]);
+            this.cleaLayerAndSourceToregex([/^sours|^source/, /^text|^source/]);
             this.drawLine = [];
             this.sourIndex = 1;
         },
@@ -189,7 +232,7 @@ export default {
                 mapBoxApiClass.offSetMapEvent(this.clickGetlngLat, 'click');
                 mapBoxApiClass.offSetMapEvent(this.drawLineToclickGetlngLat, 'contextmenu');
                 this.drawLine = [];
-                this.cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/]);
+                this.cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/, /^text|^source/]);
                 map.getCanvas().style.cursor = 'pointer';
                 this.sourIndex = 1;
             } else {
@@ -203,7 +246,7 @@ export default {
         fltToOrientation() {
             this.initVueData();
             this.drawLinechange();
-            this.cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/]);
+            this.cleaLayerAndSourceToregex([/^draw|^source/, /^sours|^source/, /^text|^source/]);
             this.cleacarLayers();
             mapBoxApiClass.flyToCenten(this.routeGeoJson, 3);
         },
@@ -213,7 +256,7 @@ export default {
                 mapBoxApiClass.flyToCenten(oldHome, 17);
                 return;
             }
-            mapBoxApiClass.addRoutelayer(`oldHome`, oldHome, { color: this.activeCoror, width: 2, opacity: 1 });
+            mapBoxApiClass.addRoutelayer(`oldHome`, 'line', oldHome, { color: this.activeCoror, width: 2, opacity: 1 });
             mapBoxApiClass.flyToCenten(oldHome, 17);
         },
 
@@ -234,7 +277,7 @@ export default {
                 this.cleacarLayers();
                 return;
             }
-            mapBoxApiClass.addRoutelayer('lineToPlan', res, { color: '#077692', width: 14, opacity: 0.5 });
+            mapBoxApiClass.addRoutelayer('lineToPlan', 'line', res, { color: '#077692', width: 14, opacity: 0.5 });
             this.changeLinePlan('lineToPlan');
         },
         //导航点击切换逻辑
