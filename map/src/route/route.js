@@ -196,6 +196,24 @@ export const routes = [
                 name: '印章移动',
                 indexnum: '4-13',
                 component: () => import('../components/ChildrenNav/vueLean/layerWord.vue')
+            },
+            {
+                path: '/Vuelearn/tabletest',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: '表格',
+                indexnum: '4-14',
+                component: () => import('../components/ChildrenNav/vueLean/tabletest.vue')
+            },
+            {
+                path: '/Vuelearn/loadTable',
+                // meta: {
+                //   keepAlive: false,
+                // },
+                name: '表格底部加载',
+                indexnum: '4-15',
+                component: () => import('../components/ChildrenNav/vueLean/loadTable.vue')
             }
         ]
     },

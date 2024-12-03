@@ -80,5 +80,24 @@ class mapBoxApi {
         let center = centerObj.geometry.coordinates;
         return center;
     }
+    animatePoint(timestamp, lineCoordinates, animatePoint) {
+        var progress = (timestamp / 10000) % 1;
+        var point = turf.along(turf.lineString(lineCoordinates), progress * turf.length(turf.lineString(lineCoordinates))).geometry
+            .coordinates;
+        map.getSource('point').setData({
+            type: 'FeatureCollection',
+            features: [
+                {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: point
+                    }
+                }
+            ]
+        });
+
+        requestAnimationFrame(animatePoint);
+    }
 }
 export default mapBoxApi;

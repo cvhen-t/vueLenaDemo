@@ -63,12 +63,18 @@
                 <el-button size="mini"
                            @click="lineToPlan">导航 </el-button>
             </div>
+
+            <div class="maginten">
+                <el-button size="mini"
+                           @click="lineToPlanTudong">运动 </el-button>
+            </div>
         </div>
 
         <div style="height:100%;width:100%;text-align:left;">
             <div style="height: 100%; width: 100%;"
                  ref="basicMapbox"></div>
         </div>
+
     </div>
 
 </template>
@@ -79,7 +85,7 @@ import { linePlan, oldHome } from './comm/json/geoJson';
 import mapboxgl from 'mapbox-gl';
 import mapBoxApi from './comm/mapApi';
 import drawingTool from './comm/feature/drawingTool';
-
+import * as turf from '@turf/turf';
 import { togeoJson, putStrNowDate, copyText } from './comm/util.js';
 let mapBoxApiClass = null;
 let drawingToolClass = null;
@@ -258,6 +264,161 @@ export default {
             }
             mapBoxApiClass.addRoutelayer(`oldHome`, 'line', oldHome, { color: this.activeCoror, width: 2, opacity: 1 });
             mapBoxApiClass.flyToCenten(oldHome, 17);
+        },
+
+        //运动
+        lineToPlanTudong() {
+            // let lineCoordinates = [];
+            // // lineCoordinates = this.interpolatePoints(coordinates[0], coordinates[1], 10);
+            // // console.log(lineCoordinates);
+            // const allLayers = map.getStyle().layers;
+            // // 过滤出所有 ID 包含 'draw' 的图层
+            // const drawLayers = allLayers.filter((layer) => layer.id.includes('draw'));
+            // let coordinates = [];
+            // drawLayers.forEach((layer) => {
+            //     const layerId = layer.id;
+            //     // 获取图层的 source 和 sourceLayer
+            //     const sourceId = layer.source;
+            //     const sourceLayer = layer['source-layer'];
+            //     // 获取对应的 source 数据
+            //     const sourceData = map.getSource(sourceId)._data;
+            //     if (sourceData && sourceData.features) {
+            //         sourceData.features.forEach((feature) => {
+            //             if (feature.properties && feature.properties['source-layer'] === sourceLayer) {
+            //                 coordinates.push(feature.geometry.coordinates);
+            //                 map.addSource(`point${layer.id}`, {
+            //                     type: 'geojson',
+            //                     data: {
+            //                         type: 'FeatureCollection',
+            //                         features: [
+            //                             {
+            //                                 type: 'Feature',
+            //                                 geometry: {
+            //                                     type: 'Point',
+            //                                     coordinates: feature.geometry.coordinates[0]
+            //                                 }
+            //                             }
+            //                         ]
+            //                     }
+            //                 });
+            //                 map.addLayer({
+            //                     id: `point${layer.id}`,
+            //                     type: 'circle',
+            //                     source: `point${layer.id}`,
+            //                     paint: {
+            //                         'circle-radius': 3,
+            //                         'circle-color': '#f00'
+            //                     }
+            //                 });
+            //                 requestAnimationFrame(this.animatePoint(10, feature.geometry.coordinates, `point${layer.id}`));
+            //             }
+            //         });
+            //     }
+            // });
+            // console.log(coordinates);
+            // requestAnimationFrame(this.animatePoint(10, item));
+
+            const lines = [];
+            const points = [];
+            let animationId;
+
+            function addLine(coords) {
+                const id = `line-${lines.length}`;
+                map.addLayer({
+                    id: id,
+                    type: 'line',
+                    source: {
+                        type: 'geojson',
+                        data: {
+                            type: 'Feature',
+                            properties: {},
+                            geometry: {
+                                type: 'LineString',
+                                coordinates: coords
+                            }
+                        }
+                    },
+                    layout: {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    paint: {
+                        'line-color': '#888',
+                        'line-width': 8
+                    }
+                });
+            }
+            lines.push(id);
+
+            const pointId = `point-${points.length}`;
+            map.addLayer({
+                id: pointId,
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'Point',
+                            coordinates: coords[0]
+                        }
+                    }
+                },
+                paint: {
+                    'circle-radius': 5,
+                    'circle-color': '#f00'
+                }
+            });
+            points.push({ id: pointId, coords, t: 0 });
+
+            map.on('click', (e) => {
+                if (lines.length > 0) {
+                    const lastLineCoords = map.getSource(lines[lines.length - 1])._data.geometry.coordinates;
+                    addLine([lastLineCoords[lastLineCoords.length - 1], [e.lngLat.lng, e.lngLat.lat]]);
+                } else {
+                    addLine([
+                        [e.lngLat.lng, e.lngLat.lat],
+                        [e.lngLat.lng, e.lngLat.lat]
+                    ]);
+                }
+            });
+        },
+
+        animatePoint() {
+            points.forEach((point) => {
+                point.t += 0.01;
+                if (point.t > 1) {
+                    point.t = 0;
+                }
+                const [start, end] = point.coords;
+                const lng = (1 - point.t) * start[0] + point.t * end[0];
+                const lat = (1 - point.t) * start[1] + point.t * end[1];
+                map.getSource(point.id).setData({
+                    type: 'Feature',
+                    properties: {},
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [lng, lat]
+                    }
+                });
+            });
+            animationId = requestAnimationFrame(animate);
+        },
+
+        interpolatePoints(start, end, numPoints) {
+            const points = [];
+            const [x1, y1] = start;
+            const [x2, y2] = end;
+
+            for (let i = 0; i <= numPoints; i++) {
+                const t = i / numPoints; // 插值参数 t 的范围是 0 到 1
+                const x = (1 - t) * x1 + t * x2;
+                const y = (1 - t) * y1 + t * y2;
+                points.push([x, y]);
+            }
+
+            return points;
         },
 
         //组装导航路线数据
